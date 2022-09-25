@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Info gempa realtime BMKG</title>
+    <style>
+        table {border: 2px solid black; border-collapse: collapse;}
+        th {border:1px solid black; padding: 10px; border-collapse: collapse;}
+        td {border:1px solid black; padding: 2px; }
+        img {object-fit: contain; height: 400px;}
+    </style>
+</head>
+<body>
+    <h1>Informasi gempa realtime BMKG</h1>
+    <audio src="aud/warn.mp3" hidden id="Warning"></audio>
+    <audio src="aud/alert.mp3" hidden id="Alert"></audio>
+    <div>
+        <p id="informasi">
+            Sedang mengakses info gempa...
+        </p>
+        <table>
+            <tr>
+                <th>Data</th>
+                <th>Isi</th>
+            </tr>
+            <tr>
+                <td>Time</td>
+                <td class="tblGempa" name="Time">-</td>
+            </tr>
+            <tr>
+                <td>Coordinates</td>
+                <td class="tblGempa" name="Coordinates">-</td>
+            </tr>
+            <tr>
+                <td>Place</td>
+                <td class="tblGempa" name="Place">-</td>
+            </tr>
+            <tr>
+                <td>Mag</td>
+                <td class="tblGempa" name="Mag">-</td>
+            </tr>
+            <tr>
+                <td>Depth</td>
+                <td class="tblGempa" name="Depth">-</td>
+            </tr>
+            <tr>
+                <td>Status</td>
+                <td class="tblGempa" name="Status">-</td>
+            </tr>
+            <tr>
+                <td>Fase</td>
+                <td class="tblGempa" name="Fase">-</td>
+            </tr>
+            <tr>
+                <td>id</td>
+                <td class="tblGempa" name="id">-</td>
+            </tr>
+        </table>
+        <pre id="txtLog">Memuat data...</pre>
+        <p><b>Disclaimer:</b> Situs ini tidak disponsori oleh BMKG</p>
+    </div>
+    <script type="text/javascript" src="gempa.js"></script>
+</body>
+</html>
