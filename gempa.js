@@ -50,7 +50,7 @@ function displayUpdate (dtGempa) {
     txtDetail.textContent = out;
 
     tblDetail.Time.textContent = dtProp.time;
-    tblDetail.Coordinates.textContent = dtCoordinates[0] + ", " + dtCoordinates[1] + " [" + dtCoordinates[2] + "]";
+    tblDetail.Coordinates.textContent = dtCoordinates[1] + ", " + dtCoordinates[0] + " [" + dtCoordinates[2] + "]";
     tblDetail.Place.textContent = dtProp.place;
     tblDetail.Mag.textContent = dtProp.mag;
     tblDetail.Depth.textContent = dtProp.depth;
