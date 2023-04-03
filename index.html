@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Info gempa realtime BMKG</title>
+    <title>Info Gempa Realtime</title>
     <style>
         table {border: 2px solid black; border-collapse: collapse;}
         th {border:1px solid black; padding: 10px; border-collapse: collapse;}
@@ -13,7 +13,7 @@
     </style>
 </head>
 <body>
-    <h1>Informasi gempa realtime BMKG</h1>
+    <h1>Informasi Gempa Realtime</h1>
     <audio src="aud/info.mp3" hidden id="audInfo"></audio>
     <audio src="aud/alert.mp3" hidden id="audAlert"></audio>
     <div>
@@ -59,8 +59,15 @@
             </tr>
         </table>
         <pre id="txtLog">Memuat data...</pre>
-        <p><b>Disclaimer:</b> Situs ini tidak disponsori oleh BMKG</p>
+        <p>
+            Sumber data: BMKG. 
+            <a href="#" id="linkDisc">Disclaimer & Credits.</a>
+        </p>
     </div>
     <script type="text/javascript" src="gempa.js"></script>
+    <script type="text/javascript">
+        var btDisc = document.getElementById("linkDisc");
+        btDisc.addEventListener("click", () => {alert("== DISCLAIMER ==\nData yang tersedia pada halaman ini bukanlah informasi resmi. Website ini tidak disponsori oleh BMKG dalam bentuk apapun.\n\n== CREDITS ==\nBMKG (www.bmkg.go.id)\n\n== SOUNDS (Freesound.org) ==\n\'Weird Buttons App Game UI\' - Eponn (bit.ly/patreon22)\n\'UI Confirmation Alert\' - InspectorJ (www.jshaw.co.uk)\n\'UIAlert_Interface.Alarm.Warning signal 6_EM\' - newlocknew")})
+    </script>
 </body>
 </html>
