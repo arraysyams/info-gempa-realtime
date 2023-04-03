@@ -15,8 +15,8 @@ var cekData = "";
 var txtDetail = document.getElementById("informasi");
 var tblDetail = document.getElementsByClassName("tblGempa");
 var txtLog = document.getElementById("txtLog");
-var audWarn = document.getElementById("Warning")
-var audAlert = document.getElementById("Alert")
+var audInfo = document.getElementById("audInfo")
+var audAlert = document.getElementById("audAlert")
 var timeRefresh; // Variabel yg akan ditempati timer
 var interval = 2500; // Jeda waktu dalam milisekon sebelum refresh
 var firstState = true;
@@ -83,7 +83,7 @@ xmlhttp.onreadystatechange = function() {
                 statusUpdate("Berhasil memuat data");
                 firstState = false;
             } else {
-                if (mag >= 6) { audAlert.play() } else { audWarn.play() }
+                if (mag >= 6) { audAlert.play() } else { audInfo.play() }
                 statusUpdate("Ada update");
             }
         } else {
