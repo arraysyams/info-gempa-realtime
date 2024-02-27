@@ -130,7 +130,7 @@ class EntriGempa {
       <div class="popup-titik">
         <div class="mag"><b>M${getDisplayedMagnitude(this._mag)}</b></div>
         <div>${this._lokasi}</div>
-        <div>Kedalaman: ${this._kedalaman} km</div>
+        <div>Kedalaman: ${Math.round(this._kedalaman)} km</div>
       </div>
       `)
     )
@@ -151,7 +151,7 @@ class EntriGempa {
   updateInfoHTML() {
     this._HTMLInfo.querySelector(".mag").textContent = getDisplayedMagnitude(this._mag);
     this._HTMLInfo.querySelector(".lokasi").textContent = this._lokasi;
-    this._HTMLInfo.querySelector(".kedalaman").textContent = `${this._kedalaman} km`;
+    this._HTMLInfo.querySelector(".kedalaman").textContent = `${Math.round(this._kedalaman)} km`;
     this._HTMLInfo.querySelector(".waktu").textContent = this._waktu;
     if (this._mag >= 7) {
       this._HTMLInfo.classList.add("bahaya");
