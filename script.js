@@ -218,5 +218,21 @@ async function getJSON(url) {
 	return json;
 }
 
-initializeMap()
-susunDaftarRealtime()
+async function mulai() {
+  let err;
+  try {
+    await initializeMap();
+    await susunDaftarRealtime();
+  } catch (e) {
+    err = e;
+  }
+  if (err) {
+    alert(err);
+    document.querySelector(".spinner").style.display = "none";
+    document.querySelector(".error").textContent = `Terjadi kesalahan, mohon refresh halaman ini. ${err}`;
+  } else {
+    document.querySelector(".loading").style.display = "none";
+  }
+}
+
+mulai()

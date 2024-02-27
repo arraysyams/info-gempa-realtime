@@ -13,7 +13,16 @@
   <main>
     <div class="container">
       <div id="map"></div>
-      <div id="daftar"></div>
+      <div id="sidebar">
+        <div id="sidebar-title"><span><b>Daftar gempa realtime</b></span></div>
+        <div id="daftar"></div>
+      </div>
+      <div class="loading">
+        <div class="spinner-parent">
+          <img src="assets/spinner.svg" alt="loading" class="spinner">
+        </div>
+        <div class="error"></div>
+      </div>
     </div>
   </main>
   <script src="assets/leaflet.js"></script>
