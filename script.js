@@ -223,8 +223,9 @@ async function getDataRealtime() {
         daftarGempa[eventid] = infoBaru;
       }
     }
+    showTopError()
   } catch (error) {
-    console.log(error)
+    showTopError(`Kesalahan jaringan. (${error})`)
   }
   window.setTimeout(() => {getDataRealtime()}, 5000)
 }
@@ -240,18 +241,33 @@ function getDisplayedMagnitude(magnitudo) {
 async function getXML(url) {
   const parser = new DOMParser();
   const res = await fetch(url)
+  if (!res.ok) {
+    throw new Error(`${res.status}: ${res.statusText}`)
+  }
 	const xml = await res.text();
 	return parser.parseFromString(xml, "text/xml");
 }
 
 async function getJSON(url, options) {
-  let opt = options;
   if (!options) {
     opt = {}
   }
   const res = await fetch(url, opt)
-	const json = await res.json();
-	return json;
+  if (!res.ok) {
+    throw new Error(`${res.status}: ${res.statusText}`)
+  }
+  const json = await res.json();
+  return json;
+}
+
+function showTopError(message) {
+  const tErr = document.querySelector("#modal-error");
+  if (message) {
+    tErr.querySelector("span").textContent = message;
+    tErr.style.display = "flex"
+  } else {
+    tErr.style.display = "none"
+  }
 }
 
 async function mulai() {
@@ -263,9 +279,13 @@ async function mulai() {
     err = e;
   }
   if (err) {
-    alert(err);
-    document.querySelector(".spinner").style.display = "none";
-    document.querySelector(".error").textContent = `Terjadi kesalahan, mohon refresh halaman ini. ${err}`;
+    const retry = confirm(`Terjadi kesalahan saat pengambilan data. Coba lagi?\n(${err})`);
+    if (retry) {
+      window.setTimeout(() => mulai(), 500)
+    } else {
+      document.querySelector(".spinner").style.display = "none";
+      showTopError(`Terjadi kesalahan, mohon refresh halaman ini. (${err})`)
+    }
   } else {
     document.querySelector(".loading").style.display = "none";
     getDataRealtime();
