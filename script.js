@@ -2,7 +2,7 @@ var map = L.map('map');
 
 async function initializeMap() {
   map.setView([-3, 118], 3);
-  map.attributionControl.setPosition("bottomleft")
+  map.attributionControl.setPosition("bottomleft");
   var faults;
   faultStyleRoad = {
     "color": "#6554AF",
@@ -24,6 +24,8 @@ async function initializeMap() {
     maxZoom: 13,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
   }); osm.addTo(map);
+
+  map.attributionControl.addAttribution("Sumber data: BMKG")
 }
 
 class DivObject {
