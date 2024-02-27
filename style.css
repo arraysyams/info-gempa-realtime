@@ -115,7 +115,7 @@ body {
   .container {
     flex-direction: column;
   }
-  #daftar {
+  #sidebar {
     box-shadow: none;
     height: 50%;
     width: 100%;
