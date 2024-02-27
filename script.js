@@ -96,13 +96,6 @@ class EntriGempa {
 
   tambahLingkaran () {
     this.updateLingkaran();
-    this._lingkaran.addEventListener("mouseover", () => {
-      this._lingkaran.setStyle(this.#hoverStyle);
-      this._lingkaran.bringToFront()
-    })
-    this._lingkaran.addEventListener("mouseout", () => {
-      this._lingkaran.setStyle(this.#defaultStyle);
-    })
     if (!this.#visible) {
       this.#visible = true
       this._lingkaran.addTo(map);
@@ -149,13 +142,7 @@ class EntriGempa {
     document.querySelector("#daftar").appendChild(this._HTMLInfo);
     this._HTMLInfo.addEventListener("click", () => {
       map.panTo([this._lat, this._lng]);
-    })
-    this._HTMLInfo.addEventListener("mouseover", () => {
-      this._lingkaran.setStyle(this.#hoverStyle);
-      this._lingkaran.bringToFront()
-    })
-    this._HTMLInfo.addEventListener("mouseout", () => {
-      this._lingkaran.setStyle(this.#defaultStyle);
+      this._lingkaran.openPopup();
     })
   }
 
