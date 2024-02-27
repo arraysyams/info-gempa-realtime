@@ -57,6 +57,7 @@ body {
 .entri.bahaya {
   background-color: #9d0000;
   color: white;
+  border-color: white;
 }
 .entri > .mag {
   font-weight: 700;

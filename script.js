@@ -128,7 +128,7 @@ class EntriGempa {
     this._lingkaran.bindPopup(
       L.popup().setContent(`
       <div class="popup-titik">
-        <div class="mag"><b>M${this._mag}</b></div>
+        <div class="mag"><b>M${getDisplayedMagnitude(this._mag)}</b></div>
         <div>${this._lokasi}</div>
         <div>Kedalaman: ${this._kedalaman} km</div>
       </div>
@@ -139,7 +139,9 @@ class EntriGempa {
   tambahInfoHTML() {
     this._HTMLInfo = this._getKerangkaHTML();
     this.updateInfoHTML();
-    document.querySelector("#daftar").appendChild(this._HTMLInfo);
+    const dftr = document.querySelector("#daftar");
+    // document.querySelector("#daftar").appendChild(this._HTMLInfo);
+    dftr.insertBefore(this._HTMLInfo, dftr.firstChild)
     this._HTMLInfo.addEventListener("click", () => {
       map.panTo([this._lat, this._lng]);
       this._lingkaran.openPopup();
@@ -147,7 +149,7 @@ class EntriGempa {
   }
 
   updateInfoHTML() {
-    this._HTMLInfo.querySelector(".mag").textContent = this._mag;
+    this._HTMLInfo.querySelector(".mag").textContent = getDisplayedMagnitude(this._mag);
     this._HTMLInfo.querySelector(".lokasi").textContent = this._lokasi;
     this._HTMLInfo.querySelector(".kedalaman").textContent = `${this._kedalaman} km`;
     this._HTMLInfo.querySelector(".waktu").textContent = this._waktu;
@@ -160,9 +162,15 @@ class EntriGempa {
     }
   }
 
-  updateInfo(){
-    this.updateLingkaran()
-    this.updateInfoHTML()
+  updateParameter(magnitudo, kedalaman, lokasi, waktu, lat, lng){
+    if (magnitudo) {this._mag = parseFloat(magnitudo);}
+    if (kedalaman) {this._kedalaman = parseFloat(kedalaman)}
+    if (lokasi) {this._lokasi = lokasi}
+    if (waktu) {this._waktu = waktu}
+    if (lat) {this._lat = parseFloat(lat)}
+    if (lng) {this._lng = parseFloat(lng)}
+    this.updateLingkaran();
+    this.updateInfoHTML();
   }
 }
 
@@ -170,7 +178,10 @@ var daftarGempa = {}
 
 async function susunDaftarRealtime() {
   const sumber = await getXML("https://bmkg-content-inatews.storage.googleapis.com/live30event.xml");
-  const data = sumber.querySelectorAll("gempa");
+  const data = [];
+  sumber.querySelectorAll("gempa").forEach((entri) => {
+    data.unshift(entri)
+  })
   data.forEach((entri) => {
     const eventId = entri.querySelector("eventid").textContent;
     const mag = entri.querySelector("mag").textContent;
@@ -188,8 +199,42 @@ async function susunDaftarRealtime() {
   })
 }
 
+var currentData;
 async function getDataRealtime() {
-  
+  try {
+    const latestData = await getJSON("https://bmkg-content-inatews.storage.googleapis.com/lastQL.json");
+    if (currentData != JSON.stringify(latestData)) {
+      currentData = JSON.stringify(latestData);
+      const eventid = latestData.features[0].properties.id;
+      const mag = latestData.features[0].properties.mag;
+      const waktu = latestData.features[0].properties.time.split(".")[0].replaceAll("-", "/") + " UTC";
+      const kedalaman = latestData.features[0].properties.depth;
+      const tempat = latestData.features[0].properties.place;
+      const lat = parseFloat(latestData.features[0].geometry.coordinates[1]);
+      let lng = parseFloat(latestData.features[0].geometry.coordinates[0]);
+      if (lng<-20) {
+        lng = 180 + 180 + lng
+      }
+
+      if (daftarGempa[eventid]) {
+        daftarGempa[eventid].updateParameter(mag, kedalaman, tempat, waktu, lat, lng);
+      } else {
+        const infoBaru = new EntriGempa(eventid, mag, kedalaman, tempat, waktu, lat, lng);
+        daftarGempa[eventid] = infoBaru;
+      }
+    }
+  } catch (error) {
+    console.log(error)
+  }
+  window.setTimeout(() => {getDataRealtime()}, 5000)
+}
+
+function getDisplayedMagnitude(magnitudo) {
+  return new Intl.NumberFormat("id-ID", {
+    minimumFractionDigits: 1
+  }).format(
+    Math.round(parseFloat(magnitudo) * 10) / 10
+  );
 }
 
 async function getXML(url) {
@@ -219,6 +264,7 @@ async function mulai() {
     document.querySelector(".error").textContent = `Terjadi kesalahan, mohon refresh halaman ini. ${err}`;
   } else {
     document.querySelector(".loading").style.display = "none";
+    getDataRealtime();
   }
 }
 
