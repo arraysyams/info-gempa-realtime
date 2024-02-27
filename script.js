@@ -202,7 +202,7 @@ async function susunDaftarRealtime() {
 var currentData;
 async function getDataRealtime() {
   try {
-    const latestData = await getJSON("https://bmkg-content-inatews.storage.googleapis.com/lastQL.json");
+    const latestData = await getJSON("https://bmkg-content-inatews.storage.googleapis.com/lastQL.json", {cache: "no-cache"});
     if (currentData != JSON.stringify(latestData)) {
       currentData = JSON.stringify(latestData);
       const eventid = latestData.features[0].properties.id;
@@ -244,8 +244,12 @@ async function getXML(url) {
 	return parser.parseFromString(xml, "text/xml");
 }
 
-async function getJSON(url) {
-  const res = await fetch(url)
+async function getJSON(url, options) {
+  let opt = options;
+  if (!options) {
+    opt = {}
+  }
+  const res = await fetch(url, opt)
 	const json = await res.json();
 	return json;
 }
