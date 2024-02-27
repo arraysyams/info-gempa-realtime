@@ -86,10 +86,10 @@ class EntriGempa {
     }
     switch (Math.floor(mag)) {
       case 5: return 10;
-      case 6: return 15;
-      case 7: return 20;
-      case 8: return 30;
-      case 9: return 40;
+      case 6: return 14;
+      case 7: return 17;
+      case 8: return 19;
+      case 9: return 22;
       default: return 7;
     }
   }
