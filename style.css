@@ -1,0 +1,78 @@
+html {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+html, body, main, .container {
+  width: 100%;
+  height: 100%;
+}
+body {
+  margin: 0;
+}
+.container {
+  display: flex;
+  flex-direction: row;
+}
+#map {
+  flex-grow: 1;
+  background-color: #aad3df;
+  z-index: 1;
+}
+#daftar {
+  box-shadow: -5px 0 7px #00000084;
+  width: 300px;
+  background-color: #eaeaea;
+  z-index: 2;
+  overflow: auto;
+}
+.entri {
+  display: flex;
+  flex-direction: row;
+  white-space: nowrap;
+  background-color: white;
+  border-bottom: 1px dashed black;
+  cursor: pointer;
+}
+.entri:hover {
+  text-decoration: underline;
+}
+.entri.signifikan {
+  background-color: #f4ff55;
+}
+.entri.bahaya {
+  background-color: #9d0000;
+  color: white;
+}
+.entri > .mag {
+  font-weight: 700;
+  width: 50px;
+  font-size: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+.entri > .info {
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 12px;
+  text-overflow: ellipsis;
+}
+.entri > .info > * {
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 12px;
+  text-overflow: ellipsis;
+}
+.popup-titik {
+  text-align: center;
+}
+@media screen and (max-width: 768px) and (orientation: portrait) {
+  .container {
+    flex-direction: column;
+  }
+  #daftar {
+    box-shadow: none;
+    height: 50%;
+    width: 100%;
+  }
+}
