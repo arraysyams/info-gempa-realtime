@@ -1,7 +1,20 @@
 var map = L.map('map');
 
 async function initializeMap() {
-  map.setView([-3, 118], 3);
+  const displayMap = document.getElementById("map");
+  const lebar = displayMap.clientWidth;
+  const tinggi = displayMap.clientHeight;
+  let zoomLevel = 3;
+  if (lebar >= 2100 && tinggi >= 850) {
+    zoomLevel = 6;
+  } else if (lebar >= 1100 && tinggi >= 450) {
+    zoomLevel = 5;
+  } else if (lebar >= 550 && tinggi >= 220) {
+    zoomLevel = 4;
+  } else {
+    zoomLevel = 3;
+  }
+  map.setView([-3, 118], zoomLevel);
   map.attributionControl.setPosition("bottomleft");
   var faults;
   faultStyleRoad = {
