@@ -84,7 +84,7 @@ class EntriGempa {
     if (isNaN(mag)) {
       return 7;
     }
-    switch (Math.floor(mag)) {
+    switch (Math.floor(Math.round(mag * 10) / 10) ) {
       case 5: return 10;
       case 6: return 14;
       case 7: return 17;
