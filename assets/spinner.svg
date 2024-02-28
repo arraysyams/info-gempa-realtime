@@ -2,59 +2,86 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="32"
-   height="32"
-   viewBox="0 0 8.4666665 8.4666666"
+   width="63.999996"
+   height="63.999996"
+   viewBox="0 0 16.933332 16.933332"
    version="1.1"
    id="svg1"
-   sodipodi:docname="spinner.svg"
-   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:dc="http://purl.org/dc/elements/1.1/">
-  <title
-     id="title1">speen</title>
-  <sodipodi:namedview
-     id="namedview1"
-     pagecolor="#ffffff"
-     bordercolor="#000000"
-     borderopacity="0.25"
-     inkscape:showpageshadow="2"
-     inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="true"
-     inkscape:deskcolor="#d1d1d1"
-     inkscape:document-units="px"
-     inkscape:zoom="11.313709"
-     inkscape:cx="8.750446"
-     inkscape:cy="12.418562"
-     inkscape:window-width="1920"
-     inkscape:window-height="974"
-     inkscape:window-x="-11"
-     inkscape:window-y="-11"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
+   xmlns:svg="http://www.w3.org/2000/svg">
   <defs
      id="defs1" />
   <g
-     inkscape:label="Layer 1"
-     inkscape:groupmode="layer"
      id="layer1">
-    <path
-       id="path1"
-       style="fill:#000000;stroke-width:4.20948;stroke-linejoin:bevel"
-       d="M 4.2333333 0 A 0.72760415 0.72760415 0 0 0 3.5057291 0.72760416 A 0.72760415 0.72760415 0 0 0 4.2333333 1.4552083 A 2.778125 2.778125 0 0 1 7.0114582 4.2333333 A 2.778125 2.778125 0 0 1 4.2333333 7.0114582 A 0.72760415 0.72760415 0 0 0 3.5057291 7.7390624 A 0.72760415 0.72760415 0 0 0 4.2333333 8.4666666 A 4.2333331 4.2333331 0 0 0 8.4666666 4.2333333 A 4.2333331 4.2333331 0 0 0 4.26899 0.0010335286 A 0.72760415 0.72760415 0 0 0 4.2333333 0 z " />
+    <rect
+       style="fill:#000000;stroke-width:0.278732"
+       id="rect1"
+       width="1.8520833"
+       height="6.3499999"
+       x="7.5406246"
+       y="0.52916664"
+       ry="0.97692299" />
+    <rect
+       style="fill:#666666;stroke-width:0.278732"
+       id="rect10"
+       width="1.8520833"
+       height="6.3499999"
+       x="7.5406246"
+       y="10.054167"
+       ry="0.97692299" />
+    <rect
+       style="fill:#b3b3b3;stroke-width:0.278732"
+       id="rect11"
+       width="1.8520833"
+       height="6.3499999"
+       x="7.5406246"
+       y="-16.404167"
+       ry="0.97692299"
+       transform="rotate(90)" />
+    <rect
+       style="fill:#333333;stroke-width:0.278732"
+       id="rect12"
+       width="1.8520833"
+       height="6.3499999"
+       x="7.5406246"
+       y="-6.8791666"
+       ry="0.97692299"
+       transform="rotate(90)" />
+    <rect
+       style="fill:#cccccc;stroke-width:0.278732"
+       id="rect16"
+       width="1.8520833"
+       height="6.3499999"
+       x="11.047633"
+       y="-7.9375"
+       ry="0.97692299"
+       transform="rotate(45)" />
+    <rect
+       style="fill:#4d4d4d;stroke-width:0.278732"
+       id="rect17"
+       width="1.8520833"
+       height="6.3499999"
+       x="11.047633"
+       y="1.5875"
+       ry="0.97692299"
+       transform="rotate(45)" />
+    <rect
+       style="fill:#999999;stroke-width:0.278732"
+       id="rect18"
+       width="1.8520833"
+       height="6.3499999"
+       x="-0.92604226"
+       y="-19.911175"
+       ry="0.97692299"
+       transform="rotate(135)" />
+    <rect
+       style="fill:#1a1a1a;stroke-width:0.278732"
+       id="rect19"
+       width="1.8520833"
+       height="6.3499999"
+       x="-0.92604226"
+       y="-10.386175"
+       ry="0.97692299"
+       transform="rotate(135)" />
   </g>
-  <metadata
-     id="metadata1">
-    <rdf:RDF>
-      <cc:Work
-         rdf:about="">
-        <dc:title>speen</dc:title>
-      </cc:Work>
-    </rdf:RDF>
-  </metadata>
 </svg>

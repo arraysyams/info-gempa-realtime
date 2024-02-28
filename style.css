@@ -122,13 +122,19 @@ body {
 }
 .spinner {
   animation-name: spinning;
-  animation-duration: 1s;
+  animation-duration: 0.5s;
   animation-iteration-count: infinite;
-  animation-timing-function: linear;
+  animation-timing-function: step-end;
 }
 @keyframes spinning {
   0% {rotate: 0deg}
-  100% {rotate: 360deg}
+  12.5% {rotate: 45deg}
+  25% {rotate: 90deg}
+  37.5% {rotate: 135deg}
+  50% {rotate: 180deg}
+  62.5% {rotate: 225deg}
+  75% {rotate: 270deg}
+  87.5% {rotate: 315deg}
 }
 
 /* Pesan error */
