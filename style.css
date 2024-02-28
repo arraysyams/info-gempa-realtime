@@ -17,6 +17,8 @@ body {
   background-color: #aad3df;
   z-index: 1;
 }
+
+/* Sidebar daftar gempa */
 #sidebar {
   box-shadow: -5px 0 7px #00000084;
   width: 300px;
@@ -80,9 +82,25 @@ body {
   font-size: 12px;
   text-overflow: ellipsis;
 }
+
+/* Tampilan sidebar pada tampilan portrait gawai */
+@media screen and (max-width: 768px) and (orientation: portrait) {
+  .container {
+    flex-direction: column;
+  }
+  #sidebar {
+    box-shadow: none;
+    height: 50%;
+    width: 100%;
+  }
+}
+
+/* Info Popup */
 .popup-titik {
   text-align: center;
 }
+
+/* Loading spinner */
 .loading {
   display: flex;
   position: absolute;
@@ -108,9 +126,12 @@ body {
   animation-iteration-count: infinite;
   animation-timing-function: linear;
 }
-.error {
-  font-size: 24px;
+@keyframes spinning {
+  0% {rotate: 0deg}
+  100% {rotate: 360deg}
 }
+
+/* Pesan error */
 #modal-error {
   position: absolute;
   display: none;
@@ -139,17 +160,4 @@ body {
   box-shadow: 0 0 20px #0000005f;
   border-radius: 10px;
 }
-@keyframes spinning {
-  0% {rotate: 0deg}
-  100% {rotate: 360deg}
-}
-@media screen and (max-width: 768px) and (orientation: portrait) {
-  .container {
-    flex-direction: column;
-  }
-  #sidebar {
-    box-shadow: none;
-    height: 50%;
-    width: 100%;
-  }
-}
+
