@@ -25,7 +25,7 @@ async function initializeMap() {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
   }); osm.addTo(map);
 
-  map.attributionControl.addAttribution("Sumber data: BMKG")
+  map.attributionControl.addAttribution("Sumber data: BMKG");
 }
 
 class DivObject {
@@ -35,7 +35,7 @@ class DivObject {
       div.textContent = textContent;
     }
     if (className) {
-      div.classList.add(className)
+      div.classList.add(className);
     }
     if (idName) {
       div.id = idName;
@@ -55,7 +55,7 @@ class EntriGempa {
     this._lat = lat;
     this._lng = lng;
     this._lingkaran = L.circleMarker();
-    this._HTMLInfo = "";
+    this._HTMLInfo = this._getKerangkaHTML();
     this.tambahLingkaran()
     this.tambahInfoHTML()
   }
@@ -96,8 +96,15 @@ class EntriGempa {
 
   tambahLingkaran () {
     this.updateLingkaran();
+    this._lingkaran.on("popupopen", (e) => {
+      e.target.setStyle(this.#hoverStyle);
+      e.target.bringToFront();
+    })
+    this._lingkaran.on("popupclose", (e) => {
+      e.target.setStyle(this.#defaultStyle);
+    })
     if (!this.#visible) {
-      this.#visible = true
+      this.#visible = true;
       this._lingkaran.addTo(map);
     }
   };
@@ -137,11 +144,9 @@ class EntriGempa {
   }
 
   tambahInfoHTML() {
-    this._HTMLInfo = this._getKerangkaHTML();
     this.updateInfoHTML();
     const dftr = document.querySelector("#daftar");
-    // document.querySelector("#daftar").appendChild(this._HTMLInfo);
-    dftr.insertBefore(this._HTMLInfo, dftr.firstChild)
+    dftr.insertBefore(this._HTMLInfo, dftr.firstChild);
     this._HTMLInfo.addEventListener("click", () => {
       map.panTo([this._lat, this._lng]);
       this._lingkaran.openPopup();
@@ -163,7 +168,7 @@ class EntriGempa {
   }
 
   updateParameter(magnitudo, kedalaman, lokasi, waktu, lat, lng){
-    if (magnitudo) {this._mag = parseFloat(magnitudo);}
+    if (magnitudo) {this._mag = parseFloat(magnitudo)}
     if (kedalaman) {this._kedalaman = parseFloat(kedalaman)}
     if (lokasi) {this._lokasi = lokasi}
     if (waktu) {this._waktu = waktu}
@@ -180,7 +185,7 @@ async function susunDaftarRealtime() {
   const sumber = await getXML("https://bmkg-content-inatews.storage.googleapis.com/live30event.xml");
   const data = [];
   sumber.querySelectorAll("gempa").forEach((entri) => {
-    data.unshift(entri)
+    data.unshift(entri);
   })
   data.forEach((entri) => {
     const eventId = entri.querySelector("eventid").textContent;
@@ -192,7 +197,7 @@ async function susunDaftarRealtime() {
     const lat = parseFloat(entri.querySelector("lintang").textContent);
     let lng = parseFloat(entri.querySelector("bujur").textContent);
     if (lng<-20) {
-      lng = 180 + 180 + lng
+      lng = 180 + 180 + lng;
     }
     const infoBaru = new EntriGempa(eventId, mag, kedalaman, tempat, waktu, lat, lng);
     daftarGempa[eventId] = infoBaru;
@@ -213,7 +218,7 @@ async function getDataRealtime() {
       const lat = parseFloat(latestData.features[0].geometry.coordinates[1]);
       let lng = parseFloat(latestData.features[0].geometry.coordinates[0]);
       if (lng<-20) {
-        lng = 180 + 180 + lng
+        lng = 180 + 180 + lng;
       }
 
       if (daftarGempa[eventid]) {
@@ -225,9 +230,9 @@ async function getDataRealtime() {
     }
     showTopError()
   } catch (error) {
-    showTopError(`Kesalahan jaringan. (${error})`)
+    showTopError(`Kesalahan jaringan. (${error})`);
   }
-  window.setTimeout(() => {getDataRealtime()}, 5000)
+  window.setTimeout(() => {getDataRealtime()}, 5000);
 }
 
 function getDisplayedMagnitude(magnitudo) {
@@ -240,9 +245,9 @@ function getDisplayedMagnitude(magnitudo) {
 
 async function getXML(url) {
   const parser = new DOMParser();
-  const res = await fetch(url)
+  const res = await fetch(url);
   if (!res.ok) {
-    throw new Error(`${res.status}: ${res.statusText}`)
+    throw new Error(`${res.status}: ${res.statusText}`);
   }
 	const xml = await res.text();
 	return parser.parseFromString(xml, "text/xml");
@@ -250,11 +255,11 @@ async function getXML(url) {
 
 async function getJSON(url, options) {
   if (!options) {
-    opt = {}
+    opt = {};
   }
-  const res = await fetch(url, opt)
+  const res = await fetch(url, opt);
   if (!res.ok) {
-    throw new Error(`${res.status}: ${res.statusText}`)
+    throw new Error(`${res.status}: ${res.statusText}`);
   }
   const json = await res.json();
   return json;
@@ -264,9 +269,9 @@ function showTopError(message) {
   const tErr = document.querySelector("#modal-error");
   if (message) {
     tErr.querySelector("span").textContent = message;
-    tErr.style.display = "flex"
+    tErr.style.display = "flex";
   } else {
-    tErr.style.display = "none"
+    tErr.style.display = "none";
   }
 }
 
@@ -281,10 +286,10 @@ async function mulai() {
   if (err) {
     const retry = confirm(`Terjadi kesalahan saat pengambilan data. Coba lagi?\n(${err})`);
     if (retry) {
-      window.setTimeout(() => mulai(), 500)
+      window.setTimeout(() => mulai(), 500);
     } else {
       document.querySelector(".spinner").style.display = "none";
-      showTopError(`Terjadi kesalahan, mohon refresh halaman ini. (${err})`)
+      showTopError(`Terjadi kesalahan, mohon refresh halaman ini. (${err})`);
     }
   } else {
     document.querySelector(".loading").style.display = "none";
