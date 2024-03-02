@@ -138,6 +138,7 @@ class EntriGempa {
         <div class="mag"><b>M${getDisplayedMagnitude(this._mag)}</b></div>
         <div>${this._lokasi}</div>
         <div>Kedalaman: ${Math.round(this._kedalaman)} km</div>
+	<div>${this._waktu}</div>
       </div>
       `)
     )
