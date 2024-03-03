@@ -39,6 +39,7 @@ async function initializeMap() {
   }); osm.addTo(map);
 
   map.attributionControl.addAttribution("Sumber data: BMKG");
+  map.zoomControl.setPosition("bottomleft");
 }
 
 class DivObject {
@@ -220,35 +221,43 @@ async function susunDaftarRealtime() {
 
 var currentData;
 async function getDataRealtime() {
+  let latestData;
   try {
-    const latestData = await getJSON("https://bmkg-content-inatews.storage.googleapis.com/lastQL.json", {cache: "no-cache"});
-    if (currentData != JSON.stringify(latestData)) {
-      currentData = JSON.stringify(latestData);
-      const eventid = latestData.features[0].properties.id;
-      const mag = latestData.features[0].properties.mag;
-      const waktu = latestData.features[0].properties.time.split(".")[0].replaceAll("-", "/") + " UTC";
-      const kedalaman = latestData.features[0].properties.depth;
-      const tempat = latestData.features[0].properties.place;
-      const lat = parseFloat(latestData.features[0].geometry.coordinates[1]);
-      let lng = parseFloat(latestData.features[0].geometry.coordinates[0]);
-      if (lng<-20) {
-        lng = 180 + 180 + lng;
-      }
+    latestData = await getJSON("https://bmkg-content-inatews.storage.googleapis.com/lastQL.json", {cache: "no-cache"});
+  } catch (errNetwork) {
+    showInnerError(`Kesalahan jaringan:\n${errNetwork}`);
+    latestData = false;
+  }
+  if (latestData != false) {
+    try {
+      if (currentData != JSON.stringify(latestData)) {
+        currentData = JSON.stringify(latestData);
+        const eventid = latestData.features[0].properties.id;
+        const mag = latestData.features[0].properties.mag;
+        const waktu = latestData.features[0].properties.time.split(".")[0].replaceAll("-", "/") + " UTC";
+        const kedalaman = latestData.features[0].properties.depth;
+        const tempat = latestData.features[0].properties.place;
+        const lat = parseFloat(latestData.features[0].geometry.coordinates[1]);
+        let lng = parseFloat(latestData.features[0].geometry.coordinates[0]);
+        if (lng < -20) {
+          lng = 180 + 180 + lng;
+        }
 
-      if (daftarGempa[eventid]) {
-        daftarGempa[eventid].updateParameter(mag, kedalaman, tempat, waktu, lat, lng);
-        // document.querySelector("#aud-update").play();
-        playAudio("aud-update");
-      } else {
-        const infoBaru = new EntriGempa(eventid, mag, kedalaman, tempat, waktu, lat, lng);
-        daftarGempa[eventid] = infoBaru;
-        // document.querySelector("#aud-info").play();
-        playAudio("aud-info");
+        if (daftarGempa[eventid]) {
+          daftarGempa[eventid].updateParameter(mag, kedalaman, tempat, waktu, lat, lng);
+          // document.querySelector("#aud-update").play();
+          playAudio("aud-update");
+        } else {
+          const infoBaru = new EntriGempa(eventid, mag, kedalaman, tempat, waktu, lat, lng);
+          daftarGempa[eventid] = infoBaru;
+          // document.querySelector("#aud-info").play();
+          playAudio("aud-info");
+        }
       }
+      showTopError()
+    } catch (error) {
+      showTopError(`Terjadi kesalahan. (${error})`);
     }
-    showTopError()
-  } catch (error) {
-    showTopError(`Kesalahan jaringan. (${error})`);
   }
   window.setTimeout(() => {getDataRealtime()}, 5000);
 }
@@ -270,10 +279,10 @@ async function playAudio(audioId) {
     try {
       await aud.play();
     } catch (error) {
-      throw "Gagal memutar suara";
+      throw "Gagal memutar suara:\nMohon berikan izin autoplay untuk website ini\nagar dapat menerima pemberitahuan secara leluasa";
     }
   } catch (error) {
-    console.log(error)
+    showInnerError(error)
   }
 }
 
@@ -315,6 +324,19 @@ function showTopError(message) {
   } else {
     tErr.style.display = "none";
   }
+}
+
+function showInnerError(message) {
+  const innerErr = L.control({ position: "topright" });
+  innerErr.onAdd = function (map) {
+    const div = L.DomUtil.create("div", "inner-error");
+    div.textContent = `${message}`;
+    return div;
+  };
+  innerErr.onRemove = function (map) {}
+
+  innerErr.addTo(map);
+  window.setTimeout(() => {innerErr.remove()}, 5000)
 }
 
 async function mulai() {
