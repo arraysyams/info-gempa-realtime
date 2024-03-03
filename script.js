@@ -16,23 +16,22 @@ async function initializeMap() {
   }
   map.setView([-3, 118], zoomLevel);
   map.attributionControl.setPosition("bottomleft");
-  var faults;
-  faultStyleRoad = {
+  const faultStyleRoad = {
     "color": "#6554AF",
     "weight": 1.2,
     "opacity": 1
   };
-  faultStyleTerrain = {
+  const faultStyleTerrain = {
     "color": "FD8D14",
     "weight": 1.2,
     "opacity": 1
   };
-  var faultRequest = await getJSON("https://bmkg-content-inatews.storage.googleapis.com/indo_faults_lines.geojson")
-  faults = L.geoJSON(faultRequest, {
+  const faultRequest = await getJSON("https://bmkg-content-inatews.storage.googleapis.com/indo_faults_lines.geojson")
+  const faults = L.geoJSON(faultRequest, {
     style: faultStyleRoad
   }).addTo(map);
 
-  var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     minZoom: 3,
     maxZoom: 13,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
@@ -40,22 +39,6 @@ async function initializeMap() {
 
   map.attributionControl.addAttribution("Sumber data: BMKG");
   map.zoomControl.setPosition("bottomleft");
-}
-
-class DivObject {
-  constructor(textContent, className, idName) {
-    let div = document.createElement("div");
-    if (textContent) {
-      div.textContent = textContent;
-    }
-    if (className) {
-      div.classList.add(className);
-    }
-    if (idName) {
-      div.id = idName;
-    }
-    this.this = div;
-  }
 }
 
 class EntriGempa {
@@ -245,12 +228,10 @@ async function getDataRealtime() {
 
         if (daftarGempa[eventid]) {
           daftarGempa[eventid].updateParameter(mag, kedalaman, tempat, waktu, lat, lng);
-          // document.querySelector("#aud-update").play();
           playAudio("aud-update");
         } else {
           const infoBaru = new EntriGempa(eventid, mag, kedalaman, tempat, waktu, lat, lng);
           daftarGempa[eventid] = infoBaru;
-          // document.querySelector("#aud-info").play();
           playAudio("aud-info");
         }
       }
