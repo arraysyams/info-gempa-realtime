@@ -180,20 +180,20 @@ class EntriGempa {
 var daftarGempa = {}
 
 async function susunDaftarRealtime() {
-  const sumber = await getXML("https://bmkg-content-inatews.storage.googleapis.com/live30event.xml");
+  const sumber = await getJSON("https://bmkg-content-inatews.storage.googleapis.com/gempaQL.json");
   const data = [];
-  sumber.querySelectorAll("gempa").forEach((entri) => {
+  sumber.features.forEach((entri) => {
     data.unshift(entri);
   })
   data.forEach((entri) => {
-    const eventId = entri.querySelector("eventid").textContent;
-    const mag = entri.querySelector("mag").textContent;
-    const waktu = entri.querySelector("waktu").textContent.split(".")[0] + " UTC";
-    const kedalaman = entri.querySelector("dalam").textContent;
-    const tempat = entri.querySelector("area").textContent;
+    const eventId = entri.properties.id;
+    const mag = entri.properties.mag;
+    const waktu = entri.properties.time.split(".")[0] + " UTC";
+    const kedalaman = entri.properties.depth;
+    const tempat = entri.properties.place;
 
-    const lat = parseFloat(entri.querySelector("lintang").textContent);
-    let lng = parseFloat(entri.querySelector("bujur").textContent);
+    const lat = parseFloat(entri.geometry.coordinates[1]);
+    let lng = parseFloat(entri.geometry.coordinates[0]);
     if (lng<-20) {
       lng = 180 + 180 + lng;
     }
@@ -217,7 +217,7 @@ async function getDataRealtime() {
         currentData = JSON.stringify(latestData);
         const eventid = latestData.features[0].properties.id;
         const mag = latestData.features[0].properties.mag;
-        const waktu = latestData.features[0].properties.time.split(".")[0].replaceAll("-", "/") + " UTC";
+        const waktu = latestData.features[0].properties.time.split(".")[0] + " UTC";
         const kedalaman = latestData.features[0].properties.depth;
         const tempat = latestData.features[0].properties.place;
         const lat = parseFloat(latestData.features[0].geometry.coordinates[1]);
