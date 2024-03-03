@@ -237,9 +237,13 @@ async function getDataRealtime() {
 
       if (daftarGempa[eventid]) {
         daftarGempa[eventid].updateParameter(mag, kedalaman, tempat, waktu, lat, lng);
+        // document.querySelector("#aud-update").play();
+        playAudio("aud-update");
       } else {
         const infoBaru = new EntriGempa(eventid, mag, kedalaman, tempat, waktu, lat, lng);
         daftarGempa[eventid] = infoBaru;
+        // document.querySelector("#aud-info").play();
+        playAudio("aud-info");
       }
     }
     showTopError()
@@ -247,6 +251,30 @@ async function getDataRealtime() {
     showTopError(`Kesalahan jaringan. (${error})`);
   }
   window.setTimeout(() => {getDataRealtime()}, 5000);
+}
+
+async function playAudio(audioId) {
+  try {
+    let aud;
+    try {
+      aud = document.querySelector(`#${audioId}`);
+      if (aud === null || typeof aud === 'undefined') {
+        throw "Objek audio tidak ditemukan";
+      } else {
+        if (typeof aud.play !== 'function') {
+          throw "Objek yang dipilih bukan audio";
+        }
+      }
+    } catch (error_dom) { throw error_dom; }
+
+    try {
+      await aud.play();
+    } catch (error) {
+      throw "Gagal memutar suara";
+    }
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 function getDisplayedMagnitude(magnitudo) {
