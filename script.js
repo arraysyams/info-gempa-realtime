@@ -232,7 +232,22 @@ async function getDataRealtime() {
         } else {
           const infoBaru = new EntriGempa(eventid, mag, kedalaman, tempat, waktu, lat, lng);
           daftarGempa[eventid] = infoBaru;
-          playAudio("aud-info");
+          if (parseFloat(mag) >= 7) {
+            if (document.hidden) {
+              playAudio("aud-alert-long");
+              const stopLongAlert = function () {
+                document.querySelector("#aud-alert-long").pause();
+                document.querySelector("#aud-alert-long").currentTime = 0;
+                playAudio("aud-alert");
+                document.removeEventListener("visibilitychange", stopLongAlert);
+              }
+              document.addEventListener("visibilitychange", stopLongAlert);
+            }
+          } else if (parseFloat(mag) >= 6) {
+            playAudio("aud-alert");
+          } else {
+            playAudio("aud-info");
+          }
         }
       }
       showTopError()
