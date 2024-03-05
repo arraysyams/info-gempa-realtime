@@ -79,11 +79,11 @@ body {
   bottom: 10px;
   box-shadow: 0 0 15px #00000084;
   border-radius: 4px;
-  padding: 0 0 5px 0;
 }
 #sidebar.hide .entri:first-child {
   display: flex;
   border-bottom: 0;
+  padding: 5px 0;
 }
 #sidebar.hide .entri {
   display: none;
@@ -151,7 +151,6 @@ body {
     box-shadow: none;
     width: 100%;
     border-radius: 0;
-    padding: 0 0 5px 0;
     height: auto;
   }
 }
