@@ -68,10 +68,6 @@ body {
 #sidebar-title:hover .toggle-inner {
   background-color: #ffffff;
 }
-#sidebar-title:hover img {
-  transition: transform 0.3s;
-  transform: rotate(180deg);
-}
 /* Tampilan sidebar saat diperkecil */
 #sidebar.hide {
   position: fixed;
@@ -93,6 +89,7 @@ body {
   position: sticky;
   top: 35px;
   border-bottom: 3px dashed black;
+  padding: 3px 0;
 }
 .entri {
   display: flex;
@@ -101,6 +98,7 @@ body {
   background-color: white;
   border-bottom: 1px dashed black;
   cursor: pointer;
+  padding: 2px 0;
 }
 .entri:hover {
   text-decoration: underline;
