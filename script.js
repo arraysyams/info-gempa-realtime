@@ -37,7 +37,7 @@ async function initializeMap() {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
   }); osm.addTo(map);
 
-  map.attributionControl.addAttribution("Sumber data: BMKG");
+  map.attributionControl.addAttribution(`Sumber data: BMKG`);
   map.zoomControl.setPosition("bottomleft");
 }
 
@@ -335,6 +335,27 @@ function showInnerError(message) {
   window.setTimeout(() => {innerErr.remove()}, 5000)
 }
 
+function setCreditsButton() {
+  const divCredits = L.control({ position: "topleft" });
+  divCredits.onAdd = function (map) {
+    const div = L.DomUtil.create("div", "credits");
+    const btn = L.DomUtil.create("button", "btn-credits");
+    btn.addEventListener("click", () => {
+      document.querySelector("#modal-credits").style.display = "flex";
+    })
+    L.DomEvent.addListener(btn, 'dblclick', L.DomEvent.stop);
+    L.DomEvent.addListener(btn, 'mousedown', L.DomEvent.stop);
+    L.DomEvent.addListener(btn, 'mouseup', L.DomEvent.stop);
+    btn.textContent = "Credits";
+    div.appendChild(btn);
+    return div;
+  };
+  divCredits.addTo(map)
+  document.querySelector("#modal-credits > div > button").addEventListener("click", () => {
+    document.querySelector("#modal-credits").style.display = "none";
+  })
+}
+
 function setSidebarDisplay() {
   const sidebar = document.querySelector("#sidebar");
   if (window.localStorage.getItem("hidebar") == "1") {
@@ -355,6 +376,7 @@ async function mulai() {
   try {
     setSidebarDisplay();
     await initializeMap();
+    setCreditsButton()
     await susunDaftarRealtime();
   } catch (e) {
     err = e;
