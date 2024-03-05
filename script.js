@@ -15,7 +15,7 @@ async function initializeMap() {
     zoomLevel = 3;
   }
   map.setView([-3, 118], zoomLevel);
-  map.attributionControl.setPosition("bottomleft");
+  map.attributionControl.setPosition("topleft");
   const faultStyleRoad = {
     "color": "#6554AF",
     "weight": 1.2,
@@ -335,9 +335,25 @@ function showInnerError(message) {
   window.setTimeout(() => {innerErr.remove()}, 5000)
 }
 
+function setSidebarDisplay() {
+  const sidebar = document.querySelector("#sidebar");
+  if (window.localStorage.getItem("hidebar") == "1") {
+    sidebar.classList.add("hide");
+    map.invalidateSize();
+  }
+  document.querySelector("#sidebar-title").addEventListener("click", () => {
+    sidebar.classList.toggle("hide");
+    map.invalidateSize();
+    const hiddenValue = sidebar.classList.contains("hide") ? "1" : "0";
+    window.localStorage.setItem("hidebar", hiddenValue);
+  })
+}
+
 async function mulai() {
   let err;
+  
   try {
+    setSidebarDisplay();
     await initializeMap();
     await susunDaftarRealtime();
   } catch (e) {

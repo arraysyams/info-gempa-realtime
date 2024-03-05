@@ -20,12 +20,13 @@ body {
 
 /* Sidebar daftar gempa */
 #sidebar {
-  box-shadow: -5px 0 7px #00000084;
+  box-shadow: -3px 0 5px #00000084;
   width: 300px;
-  background-color: #eaeaea;
+  background-color: white;
   z-index: 2;
   overflow: auto;
 }
+/* Header judul */
 #sidebar-title {
   background-color: white;
   display: flex;
@@ -36,10 +37,61 @@ body {
   top: 0;
   font-size: 18px;
   height: 25px;
+  padding: 5px;
+  cursor: pointer;
+  transition: 0.3s;
 }
+#sidebar-title div {
+  display: flex;
+  height: 100%;
+  line-height: 1.5;
+}
+#sidebar-title .toggle {
+  padding: 5px;
+  height: 100%;
+  box-sizing: border-box;
+}
+#sidebar-title .toggle-inner {
+  background-color: #dedede;
+  transition: 0.3s;
+  border-radius: 20px;
+  padding: 2px;
+  box-sizing: border-box;
+}
+#sidebar-title img {
+  aspect-ratio: 1/1;
+  height: 100%;
+}
+#sidebar-title:hover{
+  background-color: #dedede;
+}
+#sidebar-title:hover .toggle-inner {
+  background-color: #ffffff;
+}
+#sidebar-title:hover img {
+  transition: transform 0.3s;
+  transform: rotate(180deg);
+}
+/* Tampilan sidebar saat diperkecil */
+#sidebar.hide {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  box-shadow: 0 0 15px #00000084;
+  border-radius: 4px;
+  padding: 0 0 5px 0;
+}
+#sidebar.hide .entri:first-child {
+  display: flex;
+  border-bottom: 0;
+}
+#sidebar.hide .entri {
+  display: none;
+}
+/* Tampilan tiap entri gempa dalam daftar */
 .entri:first-child {
   position: sticky;
-  top: 25px;
+  top: 35px;
   border-bottom: 3px dashed black;
 }
 .entri {
@@ -92,6 +144,15 @@ body {
     box-shadow: none;
     height: 50%;
     width: 100%;
+  }
+  /* Saat diperkecil */
+  #sidebar.hide {
+    position: static;
+    box-shadow: none;
+    width: 100%;
+    border-radius: 0;
+    padding: 0 0 5px 0;
+    height: auto;
   }
 }
 
