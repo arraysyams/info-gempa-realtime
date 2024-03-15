@@ -250,7 +250,7 @@ async function getDataRealtime() {
           }
         }
       }
-      showTopError()
+      showTopError();
     } catch (error) {
       showTopError(`Terjadi kesalahan. (${error})`);
     }
@@ -313,12 +313,12 @@ async function getJSON(url, options) {
 }
 
 function showTopError(message) {
-  const tErr = document.querySelector("#modal-error");
+  const modalErr = document.querySelector("#modal-error-container");
   if (message) {
-    tErr.querySelector("span").textContent = message;
-    tErr.style.display = "flex";
+    modalErr.querySelector("span").textContent = message;
+    modalErr.style.display = "flex";
   } else {
-    tErr.style.display = "none";
+    modalErr.style.display = "none";
   }
 }
 
@@ -341,7 +341,7 @@ function setCreditsButton() {
     const div = L.DomUtil.create("div", "credits");
     const btn = L.DomUtil.create("button", "btn-credits");
     btn.addEventListener("click", () => {
-      document.querySelector("#modal-credits").style.display = "flex";
+      document.querySelector("#modal-credits-container").style.display = "flex";
     })
     L.DomEvent.addListener(btn, 'dblclick', L.DomEvent.stop);
     L.DomEvent.addListener(btn, 'mousedown', L.DomEvent.stop);
@@ -351,8 +351,8 @@ function setCreditsButton() {
     return div;
   };
   divCredits.addTo(map)
-  document.querySelector("#modal-credits > div > button").addEventListener("click", () => {
-    document.querySelector("#modal-credits").style.display = "none";
+  document.querySelector("#modal-credits > button").addEventListener("click", () => {
+    document.querySelector("#modal-credits-container").style.display = "none";
   })
 }
 
@@ -395,4 +395,4 @@ async function mulai() {
   }
 }
 
-mulai()
+mulai();

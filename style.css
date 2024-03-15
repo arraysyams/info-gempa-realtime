@@ -214,7 +214,7 @@ body {
 
 
 /* Modal */
-div.modal {
+div.modal-container {
   position: absolute;
   display: none;
   text-align: center;
@@ -228,7 +228,7 @@ div.modal {
   background-color: #0000005f;
   z-index: 999;
 }
-div.modal > div {
+div.modal {
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -242,35 +242,36 @@ div.modal > div {
   padding: 20px;
   box-shadow: 0 0 20px #0000005f;
   border-radius: 10px;
-}
-#modal-credits > div {
+  box-sizing: border-box;
   overflow: auto;
-  max-height: 70vh;
+  max-height: 90vh;
+}
+#modal-credits {
   text-align: left;
   justify-content: left;
   align-items: normal;
 }
-#modal-credits > div h3 {
+#modal-credits h3 {
   text-align: center;
   margin: 5px 0;
 }
-#modal-credits > div button {
+#modal-credits button {
   cursor: pointer;
   background-color: white;
   padding: 7px;
   border-radius: 5px;
   border: 1px solid black;
 }
-#modal-credits > div button:hover {
+#modal-credits button:hover {
   background-color: black;
   color: white;
 }
-#modal-credits > div ul {
+#modal-credits ul {
   text-align: left;
 }
 
 @media screen and (max-width: 500px) {
-  div.modal > div {
+  div.modal {
     width: 100%;
     border-radius: 0;
   }

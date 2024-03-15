@@ -15,8 +15,12 @@
   <audio src="assets/alert.wav" hidden id="aud-alert"></audio>
   <audio src="assets/longalert.wav" hidden id="aud-alert-long"></audio>
   <main>
-    <div id="modal-error" class="modal"><div><span></span></div></div>
-    <div id="modal-credits" class="modal"><div>
+    <!-- <div class="modal-container"></div> -->
+    <div id="modal-error-container" class="modal-container">
+      <div id="modal-error" class="modal"><span></span></div>
+    </div>
+    <div id="modal-credits-container" class="modal-container">
+      <div id="modal-credits" class="modal">
       <h3>Credits</h3>
       <ul>
         <li><a href="https://freesound.org" target="_blank" rel="noopener noreferrer"">Freesound</a></li>
@@ -25,7 +29,8 @@
         <li>Info <a href="https://freesound.org/people/InspectorJ/sounds/403009/" target="_blank" rel="noopener noreferrer">(UI Confirmation Alert, B3.wav)</a> and update sound <a href="https://freesound.org/people/InspectorJ/sounds/403011/" target="_blank" rel="noopener noreferrer">(UI Confirmation Alert, B1.wav)</a> by <a href="https://freesound.org/people/InspectorJ/" target="_blank" rel="noopener noreferrer">InspectorJ</a></li>
       </ul>
       <button>Tutup</button>
-    </div></div>
+      </div>
+    </div>
     <div class="container">
       <div id="map"></div>
       <div id="sidebar">
