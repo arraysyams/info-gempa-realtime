@@ -244,7 +244,7 @@ div.modal {
   border-radius: 10px;
   box-sizing: border-box;
   overflow: auto;
-  max-height: 90vh;
+  max-height: 80vh;
 }
 #modal-credits {
   text-align: left;
