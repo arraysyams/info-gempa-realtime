@@ -208,7 +208,7 @@ async function getDataRealtime() {
   try {
     latestData = await getJSON("https://bmkg-content-inatews.storage.googleapis.com/lastQL.json", {cache: "no-cache"});
   } catch (errNetwork) {
-    showInnerError(`Kesalahan jaringan:\n${errNetwork}`);
+    showInnerMessage(`Kesalahan jaringan:\n${errNetwork}`);
     latestData = false;
   }
   if (latestData != false) {
@@ -278,7 +278,7 @@ async function playAudio(audioId) {
       throw "Gagal memutar suara:\nMohon berikan izin autoplay untuk website ini\nagar dapat menerima pemberitahuan secara leluasa";
     }
   } catch (error) {
-    showInnerError(error)
+    showInnerMessage(error)
   }
 }
 
@@ -322,14 +322,14 @@ function showTopError(message) {
   }
 }
 
-function showInnerError(message) {
+function showInnerMessage(message) {
   const innerErr = L.control({ position: "topright" });
-  innerErr.onAdd = function (map) {
-    const div = L.DomUtil.create("div", "inner-error");
+  innerErr.onAdd = function () {
+    const div = L.DomUtil.create("div", "inner-message");
     div.textContent = `${message}`;
     return div;
   };
-  innerErr.onRemove = function (map) {}
+  innerErr.onRemove = function () {}
 
   innerErr.addTo(map);
   window.setTimeout(() => {innerErr.remove()}, 5000)

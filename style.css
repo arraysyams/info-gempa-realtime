@@ -277,8 +277,8 @@ div.modal {
     border-radius: 0;
   }
 }
-/* Pesan error */
-.inner-error {
+/* Jendela pesan/info dalam leaflet */
+.inner-message {
   padding: 6px 8px;
   font-size: 12px;
   background: white;
