@@ -261,6 +261,14 @@ div.modal {
   background-color: black;
   color: white;
 }
+.modal .buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+.modal .buttons > * {
+  flex-grow: 1;
+}
 #modal-credits {
   text-align: left;
   justify-content: left;
@@ -269,6 +277,11 @@ div.modal {
 #modal-credits ul {
   text-align: left;
   padding: 0 0 0 20px;
+}
+#modal-autoplay {
+  gap: 10px;
+  justify-content: left;
+  align-items: normal;
 }
 
 @media screen and (max-width: 500px) {

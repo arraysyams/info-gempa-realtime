@@ -258,7 +258,12 @@ async function getDataRealtime() {
   window.setTimeout(() => {getDataRealtime()}, 5000);
 }
 
+// Variabel untuk menandai izin autoplay suara
+var audioActivated = false;
 async function playAudio(audioId) {
+  if (!audioActivated) {
+    return;
+  }
   try {
     let aud;
     try {
@@ -275,10 +280,37 @@ async function playAudio(audioId) {
     try {
       await aud.play();
     } catch (error) {
-      throw "Gagal memutar suara:\nMohon berikan izin autoplay untuk website ini\nagar dapat menerima pemberitahuan secara leluasa";
+      throw "Gagal memutar suara:\nMohon berikan izin autoplay untuk website ini.";
     }
   } catch (error) {
     showInnerMessage(error)
+  }
+}
+
+async function askAutoplay() {
+  const aud = document.querySelector('#aud-empty');
+  let err;
+  try {
+    await aud.play();
+  } catch (error) {
+    err = error;
+  };
+  if (err) {
+    document.querySelector("#modal-autoplay-container").style.display = "flex";
+    document.querySelectorAll("#modal-autoplay button").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelector("#modal-autoplay-container").style.display = "none";
+      });
+    });
+    document.querySelector("#modal-autoplay #btn-ya").addEventListener("click", () => {
+      audioActivated = true;
+      showInnerMessage(
+        "Berhasil mengaktifkan suara.\nUntuk mengaktifkan suara secara permanen,\nmohon berikan izin autoplay untuk website ini\npada pengaturan browser Anda.",
+        15000
+      );
+    });
+  } else {
+    audioActivated = true;
   }
 }
 
@@ -322,7 +354,7 @@ function showTopError(message) {
   }
 }
 
-function showInnerMessage(message) {
+function showInnerMessage(message, timerMS = 5000) {
   const innerErr = L.control({ position: "topright" });
   innerErr.onAdd = function () {
     const div = L.DomUtil.create("div", "inner-message");
@@ -332,7 +364,7 @@ function showInnerMessage(message) {
   innerErr.onRemove = function () {}
 
   innerErr.addTo(map);
-  window.setTimeout(() => {innerErr.remove()}, 5000)
+  window.setTimeout(() => {innerErr.remove()}, timerMS)
 }
 
 function setCreditsButton() {
@@ -376,8 +408,9 @@ async function mulai() {
   try {
     setSidebarDisplay();
     await initializeMap();
-    setCreditsButton()
+    setCreditsButton();
     await susunDaftarRealtime();
+    askAutoplay();
   } catch (e) {
     err = e;
   }

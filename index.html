@@ -10,12 +10,22 @@
 </head>
 
 <body>
+  <audio src="assets/empty.mp3" hidden id="aud-empty"></audio>
   <audio src="assets/info.mp3" hidden id="aud-info"></audio>
   <audio src="assets/update.wav" hidden id="aud-update"></audio>
   <audio src="assets/alert.wav" hidden id="aud-alert"></audio>
   <audio src="assets/longalert.wav" hidden id="aud-alert-long"></audio>
   <main>
-    <!-- <div class="modal-container"></div> -->
+    <!-- Modal -->
+    <div id="modal-autoplay-container" class="modal-container">
+      <div id="modal-autoplay" class="modal">
+        <h3>Putar suara?</h3>
+        <div class="buttons">
+          <button id="btn-ya">Ya</button>
+          <button id="btn-tdk">Tidak</button>
+        </div>
+      </div>
+    </div>
     <div id="modal-error-container" class="modal-container">
       <div id="modal-error" class="modal"><span></span></div>
     </div>
@@ -31,6 +41,7 @@
       <button>Tutup</button>
       </div>
     </div>
+    <!-- UI utama -->
     <div class="container">
       <div id="map"></div>
       <div id="sidebar">
