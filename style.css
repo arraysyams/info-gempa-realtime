@@ -246,25 +246,25 @@ div.modal {
   overflow: auto;
   max-height: 80vh;
 }
-#modal-credits {
-  text-align: left;
-  justify-content: left;
-  align-items: normal;
-}
-#modal-credits h3 {
+.modal h3 {
   text-align: center;
   margin: 5px 0;
 }
-#modal-credits button {
+.modal button {
   cursor: pointer;
   background-color: white;
   padding: 7px;
   border-radius: 5px;
   border: 1px solid black;
 }
-#modal-credits button:hover {
+.modal button:hover {
   background-color: black;
   color: white;
+}
+#modal-credits {
+  text-align: left;
+  justify-content: left;
+  align-items: normal;
 }
 #modal-credits ul {
   text-align: left;
