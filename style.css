@@ -220,7 +220,6 @@ div.modal-container {
   text-align: center;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
   height: 100%;
   width: 100%;
   top: 0;
@@ -234,7 +233,6 @@ div.modal {
   text-align: center;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
   width: 400px;
   height: auto;
   background-color: white;
@@ -245,6 +243,7 @@ div.modal {
   box-sizing: border-box;
   overflow: auto;
   max-height: 80vh;
+  max-width: 80vw;
 }
 .modal h3 {
   text-align: center;
@@ -288,6 +287,27 @@ div.modal {
   padding: 0;
   font-size: larger;
 }
+#modal-setelan ul {
+  list-style: none;
+  padding: 0;
+  font-size: larger;
+}
+#modal-setelan .buttons {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row;
+  column-gap: 5px;
+}
+#modal-setelan .buttons > * {
+  flex-grow: 1;
+}
+.modal label {
+  cursor: pointer;
+}
+#modal-setelan .section-container {
+  margin: 19px 0;
+}
+
 
 @media screen and (max-width: 500px) {
   div.modal {
