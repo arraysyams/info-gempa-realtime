@@ -283,6 +283,11 @@ div.modal {
   justify-content: left;
   align-items: normal;
 }
+#modal-autoplay ul {
+  list-style: none;
+  padding: 0;
+  font-size: larger;
+}
 
 @media screen and (max-width: 500px) {
   div.modal {

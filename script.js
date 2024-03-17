@@ -289,28 +289,53 @@ async function playAudio(audioId) {
 
 async function askAutoplay() {
   const aud = document.querySelector('#aud-empty');
-  let err;
+  let errAutoplay;
+  let setelanAudio = window.localStorage.getItem("setelanAudio");
+  let bukaModal = true;
+  
   try {
     await aud.play();
   } catch (error) {
-    err = error;
+    errAutoplay = error;
   };
-  if (err) {
+
+  if ((errAutoplay && setelanAudio === "0") || (!errAutoplay && setelanAudio === "1")) {
+    bukaModal = false;
+  };
+  // Tampilkan modal jika user pertama kali membuka website
+  // atau jika user ingin selalu mengaktifkan suara, namun tidak memberikan izin autoplay
+  if (bukaModal) {
+    const chkJangan = document.querySelector("#modal-autoplay #chk-jangan");
     document.querySelector("#modal-autoplay-container").style.display = "flex";
-    document.querySelectorAll("#modal-autoplay button").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        document.querySelector("#modal-autoplay-container").style.display = "none";
-      });
-    });
-    document.querySelector("#modal-autoplay #btn-ya").addEventListener("click", () => {
+    const tutupModal = () => {
+      document.querySelector("#modal-autoplay-container").style.display = "none";
+    };
+    const btnYa = document.querySelector("#modal-autoplay #btn-ya");
+    btnYa.addEventListener("click", () => {
       audioActivated = true;
-      showInnerMessage(
-        "Berhasil mengaktifkan suara.\nUntuk mengaktifkan suara secara permanen,\nmohon berikan izin autoplay untuk website ini\npada pengaturan browser Anda.",
-        15000
-      );
+      if (chkJangan.checked == true) {
+        window.localStorage.setItem("setelanAudio", "1");
+        if (errAutoplay) {
+          showInnerMessage(
+            "Untuk mengaktifkan suara secara permanen,\nmohon berikan izin autoplay untuk website ini\npada pengaturan browser Anda.",
+            15000
+          );
+        }
+      }
+      tutupModal();
+    });
+    const btnTidak = document.querySelector("#modal-autoplay #btn-tdk");
+    btnTidak.addEventListener("click", () => {
+      audioActivated = false;
+      if (chkJangan.checked == true) {
+        window.localStorage.setItem("setelanAudio", "0");
+      }
+      tutupModal();
     });
   } else {
-    audioActivated = true;
+    if (setelanAudio === "1") {
+      audioActivated = true;
+    }
   }
 }
 
@@ -385,7 +410,7 @@ function setCreditsButton() {
   divCredits.addTo(map)
   document.querySelector("#modal-credits > button").addEventListener("click", () => {
     document.querySelector("#modal-credits-container").style.display = "none";
-  })
+  });
 }
 
 function setSidebarDisplay() {
