@@ -234,17 +234,17 @@ async function getDataRealtime() {
           daftarGempa[eventid] = infoBaru;
           if (parseFloat(mag) >= 7) {
             if (document.hidden) {
-              playAudio("aud-alert-long");
-              const stopLongAlert = function () {
-                document.querySelector("#aud-alert-long").pause();
-                document.querySelector("#aud-alert-long").currentTime = 0;
-                playAudio("aud-alert");
-                document.removeEventListener("visibilitychange", stopLongAlert);
+              playAudio("aud-alert");
+              const stopAlert = function () {
+                document.querySelector("#aud-alert").pause();
+                document.querySelector("#aud-alert").currentTime = 0;
+                playAudio("aud-warning");
+                document.removeEventListener("visibilitychange", stopAlert);
               }
-              document.addEventListener("visibilitychange", stopLongAlert);
+              document.addEventListener("visibilitychange", stopAlert);
             }
           } else if (parseFloat(mag) >= 6) {
-            playAudio("aud-alert");
+            playAudio("aud-warning");
           } else {
             playAudio("aud-info");
           }
