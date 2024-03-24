@@ -159,6 +159,7 @@ class EntriGempa {
     if (this._mag >= 7) {
       this._HTMLInfo.classList.add("bahaya");
     } else if (this._mag >= 5) {
+      this._HTMLInfo.classList.remove("bahaya");
       this._HTMLInfo.classList.add("signifikan");
     } else {
       this._HTMLInfo.classList.remove("signifikan", "bahaya");
