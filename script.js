@@ -16,20 +16,22 @@ async function initializeMap() {
   }
   map.setView([-3, 118], zoomLevel);
   map.attributionControl.setPosition("topleft");
-  const faultStyleRoad = {
-    "color": "#6554AF",
-    "weight": 1.2,
-    "opacity": 1
-  };
-  const faultStyleTerrain = {
-    "color": "FD8D14",
-    "weight": 1.2,
-    "opacity": 1
-  };
+  // const faultStyleRoad = {
+  //   "color": "#6554AF",
+  //   "weight": 1.2,
+  //   "opacity": 1
+  // };
+  // const faultStyleTerrain = {
+  //   "color": "FD8D14",
+  //   "weight": 1.2,
+  //   "opacity": 1
+  // };
   const faultRequest = await getJSON("https://bmkg-content-inatews.storage.googleapis.com/indo_faults_lines.geojson")
-  const faults = L.geoJSON(faultRequest, {
-    style: faultStyleRoad
-  }).addTo(map);
+  const faults = L.geoJSON(faultRequest);
+  faults.addTo(map);
+  faults.eachLayer((layer) => {
+    L.DomUtil.addClass(layer.getElement(), "faults-area")
+  }) 
 
   const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     minZoom: 3,
@@ -94,15 +96,18 @@ class EntriGempa {
   tambahLingkaran () {
     this.updateLingkaran();
     this._lingkaran.on("popupopen", (e) => {
-      e.target.setStyle(this.#hoverStyle);
+      // e.target.setStyle(this.#hoverStyle);
       e.target.bringToFront();
+      L.DomUtil.addClass(e.target.getElement(), "clicked");
     })
     this._lingkaran.on("popupclose", (e) => {
-      e.target.setStyle(this.#defaultStyle);
+      // e.target.setStyle(this.#defaultStyle);
+      L.DomUtil.removeClass(e.target.getElement(), "clicked");
     })
     if (!this.#visible) {
       this.#visible = true;
       this._lingkaran.addTo(map);
+      L.DomUtil.addClass(this._lingkaran.getElement(), "lingkaran-episenter");
     }
   };
 
@@ -115,18 +120,16 @@ class EntriGempa {
     this._lingkaran.setLatLng([this._lat, this._lng]);
     const luas = this._getLuasLingkaran(this._mag);
     this.#defaultStyle = {
-      color: 'red',
-      fillColor: '#f03',
-      fillOpacity: 0.5,
-      opacity: 1,
+      // fillOpacity: 0.5,
+      // opacity: 1,
       radius: luas,
-      weight: 1
+      // weight: 1
     }
     this.#hoverStyle = {
-      color: 'black',
-      fillColor: 'white',
-      fillOpacity: 0.8,
-      weight: 2
+      // color: 'black',
+      // fillColor: 'white',
+      // fillOpacity: 0.8,
+      // weight: 2
     }
     this._lingkaran.setStyle(this.#defaultStyle);
     this._lingkaran.bindPopup(

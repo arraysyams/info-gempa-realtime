@@ -1,9 +1,137 @@
+:root {
+  /* Warna umum */
+  --default-background: white;
+  --default-color: black;
+  --default-invert-value: 0;
+  --default-link-color: #0000ee;
+
+  /* Map */
+  --map-background: #aad3df;
+  --lingkaran-fill: #ff0033;
+  --lingkaran-stroke: red;
+  --lingkaran-fill-clicked: white;
+  --lingkaran-stroke-clicked: black;
+  --faults-stroke: #6554AF;
+
+  /* Sidebar */
+  --sidebar-shadow-color: #00000084;
+  --sidebar-toggle-inner-background: #dedede;
+  --sidebar-toggle-inner-background-hover: #ffffff;
+  --sidebar-title-background-hover: #dedede;
+
+  /* Entri gempa */
+  --entri-default-color: black;
+  --entri-signifikan-background: #f4ff55;
+  --entri-signifikan-color: black;
+  --entri-bahaya-background: #9d0000;
+  --entri-bahaya-color: white;
+
+  /* Loading div & pinner */
+  --loading-background: #def7ff;
+
+  /* Tombol credits */
+  --btn-credits-background-hover: #3f3f3f;
+  --btn-credits-color-hover: white;
+
+  /* Modal */
+  --modal-container-background: #0000005f;
+  --modal-shadow-color: #0000005f;
+  --modal-button-background: white;
+  --modal-button-color: black;
+  --modal-button-border-color: black;
+  --modal-button-background-hover: black;
+  --modal-button-color-hover: white;
+
+  /* Inner message */
+  --inner-message-shadow-color: #00000033;
+  --inner-message-border-color: #00000033;
+
+  /* Komponen leaflet */
+  --leaflet-zoom-border-color: #00000033;
+  --leaflet-zoom-background: white;
+  --leaflet-zoom-color: black;
+  --leaflet-zoom-background-hover: #f4f4f4;
+  --leaflet-zoom-color-hover: black;
+  --leaflet-zoom-background-disabled: #f4f4f4;
+  --leaflet-zoom-color-disabled: #bbbbbb;
+  --leaflet-popup-close-button: #757575;
+  --leaflet-popup-close-button-hover: #585858;
+  --leaflet-attribution-background: #ffffffcc;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Warna umum */
+    --default-background: #242424;
+    --default-color: white;
+    --default-invert-value: 1;
+    --default-link-color: #93fff8;
+  
+    /* Map */
+    --map-background: #3b3b43;
+    --lingkaran-fill: #ffea4a;
+    --lingkaran-stroke: yellow;
+    --faults-stroke: #96fff3;
+  
+    /* Sidebar */
+    --sidebar-shadow-color: #00000084;
+    --sidebar-toggle-inner-background: #343434;
+    --sidebar-toggle-inner-background-hover: #535353;
+    --sidebar-title-background-hover: #343434;
+  
+    /* Entri gempa */
+    --entri-default-color: #ffffff;
+    --entri-signifikan-background: #613700;
+    --entri-signifikan-color: white;
+    --entri-bahaya-background: #ff7272;
+    --entri-bahaya-color: black;
+  
+    /* Loading div & pinner */
+    --loading-background: #3b3b43;
+  
+    /* Tombol credits */
+    --btn-credits-background-hover: #4f4f4f;
+    --btn-credits-color-hover: #ffffff;
+  
+    /* Modal */
+    --modal-container-background: #0000005f;
+    --modal-shadow-color: #0000005f;
+    --modal-button-background: #242424;
+    --modal-button-color: white;
+    --modal-button-border-color: white;
+    --modal-button-background-hover: white;
+    --modal-button-color-hover: #242424;
+  
+    /* Inner message */
+    --inner-message-shadow-color: #00000033;
+    --inner-message-border-color: #00000033;
+
+    /* Komponen leaflet */
+    --leaflet-zoom-border-color: #ffffff33;
+    --leaflet-zoom-background: #242424;
+    --leaflet-zoom-color: white;
+    --leaflet-zoom-background-hover: #464646;
+    --leaflet-zoom-color-hover: white;
+    --leaflet-zoom-background-disabled: #464646;
+    --leaflet-zoom-color-disabled: #b5b5b5;
+    --leaflet-popup-close-button: #e0e0e0;
+    --leaflet-popup-close-button-hover: #ffffff;
+    --leaflet-attribution-background: #393939cc;
+  }
+
+  /* Tilelayer */
+  .leaflet-tile-container > * {
+    filter: invert(1) hue-rotate(230deg) contrast(0.9) grayscale(0.8);
+  }
+}
+
 html {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 html, body, main, .container {
   width: 100%;
   height: 100%;
+  background-color: var(--default-background);
 }
 body {
   margin: 0;
@@ -14,21 +142,41 @@ body {
 }
 #map {
   flex-grow: 1;
-  background-color: #aad3df;
+  background-color: var(--map-background);
   z-index: 1;
+}
+/* Komponen map */
+.lingkaran-episenter {
+  fill: var(--lingkaran-fill);
+  stroke: var(--lingkaran-stroke);
+  fill-opacity: 0.5;
+  opacity: 1;
+  stroke-width: 1;
+}
+.lingkaran-episenter.clicked {
+  fill: var(--lingkaran-fill-clicked);
+  stroke: var(--lingkaran-stroke-clicked);
+  fill-opacity: 0.8;
+  stroke-width: 2;
+}
+.faults-area {
+  stroke: var(--faults-stroke);
+  fill-opacity: 1;
+  stroke-width: 1.2;
 }
 
 /* Sidebar daftar gempa */
 #sidebar {
-  box-shadow: -3px 0 5px #00000084;
+  box-shadow: -3px 0 5px var(--sidebar-shadow-color);
   width: 300px;
-  background-color: white;
+  background-color: var(--default-background);
   z-index: 2;
   overflow: auto;
 }
 /* Header judul */
 #sidebar-title {
-  background-color: white;
+  background-color: var(--default-background);
+  color: var(--default-color);
   display: flex;
   text-align: center;
   align-items: center;
@@ -52,7 +200,7 @@ body {
   box-sizing: border-box;
 }
 #sidebar-title .toggle-inner {
-  background-color: #dedede;
+  background-color: var(--sidebar-toggle-inner-background);
   transition: 0.3s;
   border-radius: 20px;
   padding: 2px;
@@ -61,19 +209,20 @@ body {
 #sidebar-title img {
   aspect-ratio: 1/1;
   height: 100%;
+  filter: invert(var(--default-invert-value));
 }
 #sidebar-title:hover{
-  background-color: #dedede;
+  background-color: var(--sidebar-title-background-hover);
 }
 #sidebar-title:hover .toggle-inner {
-  background-color: #ffffff;
+  background-color: var(--sidebar-toggle-inner-background-hover);
 }
 /* Tampilan sidebar saat diperkecil */
 #sidebar.hide {
   position: fixed;
   right: 10px;
   bottom: 10px;
-  box-shadow: 0 0 15px #00000084;
+  box-shadow: 0 0 15px var(--sidebar-shadow-color);
   border-radius: 4px;
 }
 #sidebar.hide .entri:first-child {
@@ -88,15 +237,16 @@ body {
 .entri:first-child {
   position: sticky;
   top: 35px;
-  border-bottom: 3px dashed black;
+  border-bottom: 3px dashed var(--entri-border-bottom-color);
   padding: 3px 0;
 }
 .entri {
   display: flex;
   flex-direction: row;
   white-space: nowrap;
-  background-color: white;
-  border-bottom: 1px dashed black;
+  background-color: var(--default-background);
+  border-bottom: 1px dashed var(--entri-default-color);
+  color: var(--default-color);
   cursor: pointer;
   padding: 2px 0;
 }
@@ -104,12 +254,14 @@ body {
   text-decoration: underline;
 }
 .entri.signifikan {
-  background-color: #f4ff55;
+  background-color: var(--entri-signifikan-background);
+  color: var(--entri-signifikan-color);
+  border-color: var(--entri-signifikan-color);
 }
 .entri.bahaya {
-  background-color: #9d0000;
-  color: white;
-  border-color: white;
+  background-color: var(--entri-bahaya-background);
+  color: var(--entri-bahaya-color);
+  border-color: var(--entri-bahaya-color);
 }
 .entri > .mag {
   font-weight: 700;
@@ -168,7 +320,7 @@ body {
   height: 100%;
   width: 100%;
   z-index: 9;
-  background-color: #def7ff;
+  background-color: var(--loading-background);
   opacity: 1;
   align-items: center;
   justify-content: center;
@@ -183,6 +335,7 @@ body {
   animation-duration: 0.5s;
   animation-iteration-count: infinite;
   animation-timing-function: step-end;
+  filter: invert(var(--default-invert-value));
 }
 @keyframes spinning {
   0% {rotate: 0deg}
@@ -203,13 +356,14 @@ body {
     border: none;
     cursor: pointer;
     padding: 5px;
-    background-color: white;
+    background-color: var(--default-background);
+    color: var(--default-color);
     transition-duration: 0.2s;
   }
 }
 .btn-credits:hover {
-  background-color: rgb(63, 63, 63);
-  color: white;
+  background-color: var(--btn-credits-background-hover);
+  color: var(--btn-credits-color-hover);
 }
 
 
@@ -224,7 +378,7 @@ div.modal-container {
   width: 100%;
   top: 0;
   left: 0;
-  background-color: #0000005f;
+  background-color: var(--modal-container-background);
   z-index: 999;
 }
 div.modal {
@@ -235,10 +389,10 @@ div.modal {
   justify-content: center;
   width: 400px;
   height: auto;
-  background-color: white;
-  color: black;
+  background-color: var(--default-background);
+  color: var(--default-color);
   padding: 20px;
-  box-shadow: 0 0 20px #0000005f;
+  box-shadow: 0 0 20px var(--modal-shadow-color);
   border-radius: 10px;
   box-sizing: border-box;
   overflow: auto;
@@ -249,16 +403,20 @@ div.modal {
   text-align: center;
   margin: 5px 0;
 }
+.modal a {
+  color: var(--default-link-color);
+}
 .modal button {
   cursor: pointer;
-  background-color: white;
+  background-color: var(--modal-button-background);
   padding: 7px;
   border-radius: 5px;
-  border: 1px solid black;
+  border: 1px solid var(--modal-button-border-color);
+  color: var(--modal-button-color);
 }
 .modal button:hover {
-  background-color: black;
-  color: white;
+  background-color: var(--modal-button-background-hover);
+  color: var(--modal-button-color-hover);
 }
 .modal .buttons {
   display: flex;
@@ -315,22 +473,65 @@ div.modal {
     border-radius: 0;
   }
 }
+
 /* Jendela pesan/info dalam leaflet */
 .inner-message {
   padding: 6px 8px;
   font-size: 12px;
-  background: white;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  background: var(--default-background);
+  box-shadow: 0 0 15px var(--inner-message-shadow-color);
   gap: 5px;
   display: flex;
   flex-direction: column;
   text-align: left;
   line-height: 18px;
-  color: #000000;
+  color: var(--default-color);
   overflow: hidden;
-  border: 2px solid rgba(0,0,0,0.2);
+  border: 2px solid var(--inner-message-border-color);
   background-clip: padding-box;
   border-radius: 4px;
   white-space: break-spaces;
 }
 
+/* Komponen leaflet */
+/* Zoom control */
+.leaflet-bar .leaflet-control-zoom-in,
+.leaflet-bar .leaflet-control-zoom-out {
+  background-color: var(--leaflet-zoom-background);
+  color: var(--leaflet-zoom-color);
+}
+.leaflet-bar .leaflet-control-zoom-in:hover,
+.leaflet-bar .leaflet-control-zoom-out:hover {
+  background-color: var(--leaflet-zoom-background-hover);
+  color: var(--leaflet-zoom-color-hover);
+}
+.leaflet-bar .leaflet-control-zoom-in.leaflet-disabled,
+.leaflet-bar .leaflet-control-zoom-out.leaflet-disabled {
+  background-color: var(--leaflet-zoom-background-disabled);
+  color: var(--leaflet-zoom-color-disabled);
+}
+.leaflet-bar .leaflet-control-zoom {
+  border-color: var(--leaflet-zoom-border-color);
+}
+
+/* Popup */
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background-color: var(--default-background);
+  color: var(--default-color);
+}
+.leaflet-container a.leaflet-popup-close-button {
+  color: var(--leaflet-popup-close-button);
+}
+.leaflet-container a.leaflet-popup-close-button:hover {
+  color: var(--leaflet-popup-close-button-hover);
+}
+
+/* Attribution */
+.leaflet-container .leaflet-control-attribution {
+  background-color: var(--leaflet-attribution-background);
+  color: var(--default-color);
+}
+.leaflet-container .leaflet-control-attribution a {
+  color: var(--default-link-color);
+}
