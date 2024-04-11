@@ -26,7 +26,7 @@
   --entri-bahaya-background: #9d0000;
   --entri-bahaya-color: white;
 
-  /* Loading div & pinner */
+  /* Loading div & spinner */
   --loading-background: #def7ff;
 
   /* Tombol credits */
@@ -54,6 +54,7 @@
   --leaflet-zoom-color-hover: black;
   --leaflet-zoom-background-disabled: #f4f4f4;
   --leaflet-zoom-color-disabled: #bbbbbb;
+  --leaflet-popup-background: #ffffff;
   --leaflet-popup-close-button: #757575;
   --leaflet-popup-close-button-hover: #585858;
   --leaflet-attribution-background: #ffffffcc;
@@ -71,31 +72,31 @@
     --map-background: #3b3b43;
     --lingkaran-fill: #ffea4a;
     --lingkaran-stroke: yellow;
-    --faults-stroke: #96fff3;
+    --faults-stroke: #96caff;
   
     /* Sidebar */
     --sidebar-shadow-color: #00000084;
-    --sidebar-toggle-inner-background: #343434;
-    --sidebar-toggle-inner-background-hover: #535353;
+    --sidebar-toggle-inner-background: #535353;
+    --sidebar-toggle-inner-background-hover: #676767;
     --sidebar-title-background-hover: #343434;
   
     /* Entri gempa */
     --entri-default-color: #ffffff;
     --entri-signifikan-background: #613700;
     --entri-signifikan-color: white;
-    --entri-bahaya-background: #ff7272;
+    --entri-bahaya-background: #ff9292;
     --entri-bahaya-color: black;
   
-    /* Loading div & pinner */
-    --loading-background: #3b3b43;
+    /* Loading div & spinner */
+    --loading-background: #484a57;
   
     /* Tombol credits */
     --btn-credits-background-hover: #4f4f4f;
     --btn-credits-color-hover: #ffffff;
   
     /* Modal */
-    --modal-container-background: #0000005f;
-    --modal-shadow-color: #0000005f;
+    --modal-container-background: #0000007b;
+    --modal-shadow-color: #0000007d;
     --modal-button-background: #242424;
     --modal-button-color: white;
     --modal-button-border-color: white;
@@ -114,6 +115,7 @@
     --leaflet-zoom-color-hover: white;
     --leaflet-zoom-background-disabled: #464646;
     --leaflet-zoom-color-disabled: #b5b5b5;
+    --leaflet-popup-background: #303030;
     --leaflet-popup-close-button: #e0e0e0;
     --leaflet-popup-close-button-hover: #ffffff;
     --leaflet-attribution-background: #393939cc;
@@ -121,7 +123,7 @@
 
   /* Tilelayer */
   .leaflet-tile-container > * {
-    filter: invert(1) hue-rotate(230deg) contrast(0.9) grayscale(0.8);
+    filter: invert(1) hue-rotate(230deg) grayscale(0.8) brightness(1.5);
   }
 }
 
@@ -517,7 +519,7 @@ div.modal {
 /* Popup */
 .leaflet-popup-content-wrapper,
 .leaflet-popup-tip {
-  background-color: var(--default-background);
+  background-color: var(--leaflet-popup-background);
   color: var(--default-color);
 }
 .leaflet-container a.leaflet-popup-close-button {
