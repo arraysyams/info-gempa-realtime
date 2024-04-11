@@ -468,14 +468,6 @@ div.modal {
   margin: 19px 0;
 }
 
-
-@media screen and (max-width: 500px) {
-  div.modal {
-    width: 100%;
-    border-radius: 0;
-  }
-}
-
 /* Jendela pesan/info dalam leaflet */
 .inner-message {
   padding: 6px 8px;
