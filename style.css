@@ -237,7 +237,7 @@ body {
 .entri:first-child {
   position: sticky;
   top: 35px;
-  border-bottom: 3px dashed var(--entri-border-bottom-color);
+  border-bottom: 3px dashed var(--entri-default-color);
   padding: 3px 0;
 }
 .entri {
