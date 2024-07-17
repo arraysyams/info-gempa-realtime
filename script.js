@@ -1,4 +1,4 @@
-var map = L.map('map');
+var map = L.map("map");
 
 async function initializeMap() {
   const displayMap = document.getElementById("map");
@@ -26,18 +26,21 @@ async function initializeMap() {
   //   "weight": 1.2,
   //   "opacity": 1
   // };
-  const faultRequest = await getJSON("https://bmkg-content-inatews.storage.googleapis.com/indo_faults_lines.geojson")
+  const faultRequest = await getJSON(
+    "https://bmkg-content-inatews.storage.googleapis.com/indo_faults_lines.geojson"
+  );
   const faults = L.geoJSON(faultRequest);
   faults.addTo(map);
   faults.eachLayer((layer) => {
-    L.DomUtil.addClass(layer.getElement(), "faults-area")
-  }) 
+    L.DomUtil.addClass(layer.getElement(), "faults-area");
+  });
 
-  const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  const osm = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     minZoom: 3,
     maxZoom: 13,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-  }); osm.addTo(map);
+  });
+  osm.addTo(map);
 
   map.attributionControl.addAttribution(`Sumber data: BMKG`);
   map.zoomControl.setPosition("bottomleft");
@@ -55,16 +58,17 @@ class EntriGempa {
     this._lng = lng;
     this._lingkaran = L.circleMarker();
     this._HTMLInfo = this._getKerangkaHTML();
-    this.tambahLingkaran()
-    this.tambahInfoHTML()
+    this.tambahLingkaran();
+    this.tambahInfoHTML();
   }
   #visible = false;
   #defaultStyle = {};
   #hoverStyle = {};
 
-  _getKerangkaHTML () {
+  _getKerangkaHTML() {
     const html = new DOMParser();
-    const htmlnew = html.parseFromString(`
+    const htmlnew = html.parseFromString(
+      `
     <div class="entri">
       <div class="mag"></div>
       <div class="info">
@@ -73,43 +77,51 @@ class EntriGempa {
         <div class="waktu"></div>
       </div>
     </div>
-  `, "text/html");
+  `,
+      "text/html"
+    );
 
     return htmlnew.querySelector(".entri");
-  };
+  }
 
   _getLuasLingkaran(magnitudo) {
     const mag = parseFloat(magnitudo);
     if (isNaN(mag)) {
       return 7;
     }
-    switch (Math.floor(Math.round(mag * 10) / 10) ) {
-      case 5: return 10;
-      case 6: return 14;
-      case 7: return 17;
-      case 8: return 19;
-      case 9: return 22;
-      default: return 7;
+    switch (Math.floor(Math.round(mag * 10) / 10)) {
+      case 5:
+        return 10;
+      case 6:
+        return 14;
+      case 7:
+        return 17;
+      case 8:
+        return 19;
+      case 9:
+        return 22;
+      default:
+        return 7;
     }
   }
 
-  tambahLingkaran () {
+  tambahLingkaran() {
     this.updateLingkaran();
     this._lingkaran.on("popupopen", (e) => {
       // e.target.setStyle(this.#hoverStyle);
       e.target.bringToFront();
       L.DomUtil.addClass(e.target.getElement(), "clicked");
-    })
+    });
     this._lingkaran.on("popupclose", (e) => {
       // e.target.setStyle(this.#defaultStyle);
       L.DomUtil.removeClass(e.target.getElement(), "clicked");
-    })
+    });
     if (!this.#visible) {
       this.#visible = true;
       this._lingkaran.addTo(map);
       L.DomUtil.addClass(this._lingkaran.getElement(), "lingkaran-episenter");
     }
-  };
+  }
 
   hapusLingkaran() {
     this.#visible = false;
@@ -124,13 +136,13 @@ class EntriGempa {
       // opacity: 1,
       radius: luas,
       // weight: 1
-    }
+    };
     this.#hoverStyle = {
       // color: 'black',
       // fillColor: 'white',
       // fillOpacity: 0.8,
       // weight: 2
-    }
+    };
     this._lingkaran.setStyle(this.#defaultStyle);
     this._lingkaran.bindPopup(
       L.popup().setContent(`
@@ -138,10 +150,10 @@ class EntriGempa {
         <div class="mag"><b>M${getDisplayedMagnitude(this._mag)}</b></div>
         <div>${this._lokasi}</div>
         <div>Kedalaman: ${Math.round(this._kedalaman)} km</div>
-	<div>${this._waktu}</div>
+	      <div>${this._waktu}</div>
       </div>
       `)
-    )
+    );
   }
 
   tambahInfoHTML() {
@@ -151,7 +163,7 @@ class EntriGempa {
     this._HTMLInfo.addEventListener("click", () => {
       map.panTo([this._lat, this._lng]);
       this._lingkaran.openPopup();
-    })
+    });
   }
 
   updateInfoHTML() {
@@ -169,26 +181,38 @@ class EntriGempa {
     }
   }
 
-  updateParameter(magnitudo, kedalaman, lokasi, waktu, lat, lng){
-    if (magnitudo) {this._mag = parseFloat(magnitudo)}
-    if (kedalaman) {this._kedalaman = parseFloat(kedalaman)}
-    if (lokasi) {this._lokasi = lokasi}
-    if (waktu) {this._waktu = waktu}
-    if (lat) {this._lat = parseFloat(lat)}
-    if (lng) {this._lng = parseFloat(lng)}
+  updateParameter(magnitudo, kedalaman, lokasi, waktu, lat, lng) {
+    if (magnitudo) {
+      this._mag = parseFloat(magnitudo);
+    }
+    if (kedalaman) {
+      this._kedalaman = parseFloat(kedalaman);
+    }
+    if (lokasi) {
+      this._lokasi = lokasi;
+    }
+    if (waktu) {
+      this._waktu = waktu;
+    }
+    if (lat) {
+      this._lat = parseFloat(lat);
+    }
+    if (lng) {
+      this._lng = parseFloat(lng);
+    }
     this.updateLingkaran();
     this.updateInfoHTML();
   }
 }
 
-var daftarGempa = {}
+var daftarGempa = {};
 
 async function susunDaftarRealtime() {
   const sumber = await getJSON("https://bmkg-content-inatews.storage.googleapis.com/gempaQL.json");
   const data = [];
   sumber.features.forEach((entri) => {
     data.unshift(entri);
-  })
+  });
   data.forEach((entri) => {
     const eventId = entri.properties.id;
     const mag = entri.properties.mag;
@@ -198,19 +222,21 @@ async function susunDaftarRealtime() {
 
     const lat = parseFloat(entri.geometry.coordinates[1]);
     let lng = parseFloat(entri.geometry.coordinates[0]);
-    if (lng<-20) {
+    if (lng < -20) {
       lng = 180 + 180 + lng;
     }
     const infoBaru = new EntriGempa(eventId, mag, kedalaman, tempat, waktu, lat, lng);
     daftarGempa[eventId] = infoBaru;
-  })
+  });
 }
 
 var currentData;
 async function getDataRealtime() {
   let latestData;
   try {
-    latestData = await getJSON("https://bmkg-content-inatews.storage.googleapis.com/lastQL.json", {cache: "no-cache"});
+    latestData = await getJSON("https://bmkg-content-inatews.storage.googleapis.com/lastQL.json", {
+      cache: "no-cache",
+    });
   } catch (errNetwork) {
     showInnerMessage(`Kesalahan jaringan:\n${errNetwork}`);
     latestData = false;
@@ -244,7 +270,7 @@ async function getDataRealtime() {
                 document.querySelector("#aud-alert").currentTime = 0;
                 playAudio("aud-warning");
                 document.removeEventListener("visibilitychange", stopAlert);
-              }
+              };
               document.addEventListener("visibilitychange", stopAlert);
             }
           } else if (parseFloat(mag) >= 6) {
@@ -259,7 +285,9 @@ async function getDataRealtime() {
       showTopError(`Terjadi kesalahan. (${error})`);
     }
   }
-  window.setTimeout(() => {getDataRealtime()}, 5000);
+  window.setTimeout(() => {
+    getDataRealtime();
+  }, 5000);
 }
 
 // Variabel untuk menandai izin autoplay suara
@@ -272,14 +300,16 @@ async function playAudio(audioId) {
     let aud;
     try {
       aud = document.querySelector(`#${audioId}`);
-      if (aud === null || typeof aud === 'undefined') {
+      if (aud === null || typeof aud === "undefined") {
         throw "Objek audio tidak ditemukan";
       } else {
-        if (typeof aud.play !== 'function') {
+        if (typeof aud.play !== "function") {
           throw "Objek yang dipilih bukan audio";
         }
       }
-    } catch (error_dom) { throw error_dom; }
+    } catch (error_dom) {
+      throw error_dom;
+    }
 
     try {
       await aud.play();
@@ -287,25 +317,25 @@ async function playAudio(audioId) {
       throw "Gagal memutar suara:\nMohon berikan izin autoplay untuk website ini.";
     }
   } catch (error) {
-    showInnerMessage(error)
+    showInnerMessage(error);
   }
 }
 
 async function askAutoplay() {
-  const aud = document.querySelector('#aud-empty');
+  const aud = document.querySelector("#aud-empty");
   let errAutoplay;
   let setelanAudio = window.localStorage.getItem("setelanAudio");
   let bukaModal = true;
-  
+
   try {
     await aud.play();
   } catch (error) {
     errAutoplay = error;
-  };
+  }
 
   if ((errAutoplay && setelanAudio === "0") || (!errAutoplay && setelanAudio === "1")) {
     bukaModal = false;
-  };
+  }
   // Tampilkan modal jika user pertama kali membuka website
   // atau jika user ingin selalu mengaktifkan suara, namun tidak memberikan izin autoplay
   if (bukaModal) {
@@ -345,10 +375,8 @@ async function askAutoplay() {
 
 function getDisplayedMagnitude(magnitudo) {
   return new Intl.NumberFormat("id-ID", {
-    minimumFractionDigits: 1
-  }).format(
-    Math.round(parseFloat(magnitudo) * 10) / 10
-  );
+    minimumFractionDigits: 1,
+  }).format(Math.round(parseFloat(magnitudo) * 10) / 10);
 }
 
 async function getXML(url) {
@@ -357,8 +385,8 @@ async function getXML(url) {
   if (!res.ok) {
     throw new Error(`${res.status}: ${res.statusText}`);
   }
-	const xml = await res.text();
-	return parser.parseFromString(xml, "text/xml");
+  const xml = await res.text();
+  return parser.parseFromString(xml, "text/xml");
 }
 
 async function getJSON(url, options) {
@@ -390,10 +418,12 @@ function showInnerMessage(message, timerMS = 5000) {
     div.textContent = `${message}`;
     return div;
   };
-  innerErr.onRemove = function () {}
+  innerErr.onRemove = function () {};
 
   innerErr.addTo(map);
-  window.setTimeout(() => {innerErr.remove()}, timerMS)
+  window.setTimeout(() => {
+    innerErr.remove();
+  }, timerMS);
 }
 
 function setCreditsButton() {
@@ -403,15 +433,15 @@ function setCreditsButton() {
     const btn = L.DomUtil.create("button", "btn-credits");
     btn.addEventListener("click", () => {
       document.querySelector("#modal-credits-container").style.display = "flex";
-    })
-    L.DomEvent.addListener(btn, 'dblclick', L.DomEvent.stop);
-    L.DomEvent.addListener(btn, 'mousedown', L.DomEvent.stop);
-    L.DomEvent.addListener(btn, 'mouseup', L.DomEvent.stop);
+    });
+    L.DomEvent.addListener(btn, "dblclick", L.DomEvent.stop);
+    L.DomEvent.addListener(btn, "mousedown", L.DomEvent.stop);
+    L.DomEvent.addListener(btn, "mouseup", L.DomEvent.stop);
     btn.textContent = "Credits";
     div.appendChild(btn);
     return div;
   };
-  divCredits.addTo(map)
+  divCredits.addTo(map);
   document.querySelector("#modal-credits > button").addEventListener("click", () => {
     document.querySelector("#modal-credits-container").style.display = "none";
   });
@@ -428,12 +458,12 @@ function setSidebarDisplay() {
     map.invalidateSize();
     const hiddenValue = sidebar.classList.contains("hide") ? "1" : "0";
     window.localStorage.setItem("hidebar", hiddenValue);
-  })
+  });
 }
 
 async function mulai() {
   let err;
-  
+
   try {
     setSidebarDisplay();
     await initializeMap();

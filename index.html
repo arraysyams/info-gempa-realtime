@@ -1,98 +1,152 @@
 <!DOCTYPE html>
 <html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Riwayat Gempa Realtime</title>
+    <link rel="stylesheet" href="assets/leaflet.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Riwayat Gempa Realtime</title>
-  <link rel="stylesheet" href="assets/leaflet.css">
-  <link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-  <audio src="assets/empty.mp3" hidden id="aud-empty"></audio>
-  <audio src="assets/UI_Confirmation_Alert_B3.mp3" hidden id="aud-info"></audio>
-  <audio src="assets/UI_Confirmation_Alert_B1.mp3" hidden id="aud-update"></audio>
-  <audio src="assets/SweetAlertSound5.mp3" hidden id="aud-warning"></audio>
-  <audio src="assets/alert.mp3" hidden id="aud-alert"></audio>
-  <main>
-    <!-- Modal -->
-    <div id="modal-setelan-container" class="modal-container">
-      <div id="modal-setelan" class="modal">
-        <h3>Setelan</h3>
-        <div class="section-container">
-          <div>
-            <input type="checkbox" name="chk-audio" id="chk-audio" />
-            <label for="chk-audio">Aktifkan suara</label>
+  <body>
+    <audio src="assets/empty.mp3" hidden id="aud-empty"></audio>
+    <audio src="assets/UI_Confirmation_Alert_B3.mp3" hidden id="aud-info"></audio>
+    <audio src="assets/UI_Confirmation_Alert_B1.mp3" hidden id="aud-update"></audio>
+    <audio src="assets/SweetAlertSound5.mp3" hidden id="aud-warning"></audio>
+    <audio src="assets/alert.mp3" hidden id="aud-alert"></audio>
+    <main>
+      <!-- Modal -->
+      <div id="modal-setelan-container" class="modal-container">
+        <div id="modal-setelan" class="modal">
+          <h3>Setelan</h3>
+          <div class="section-container">
+            <div>
+              <input type="checkbox" name="chk-audio" id="chk-audio" />
+              <label for="chk-audio">Aktifkan suara</label>
+            </div>
+            <div>
+              <input type="checkbox" name="chk-audio-tanya" id="chk-audio-tanya" />
+              <label for="chk-audio-tanya">Selalu tanya saat membuka website</label>
+            </div>
           </div>
-          <div>
-            <input type="checkbox" name="chk-audio-tanya" id="chk-audio-tanya" />
-            <label for="chk-audio-tanya">Selalu tanya saat membuka website</label>
+          <div class="buttons">
+            <button>Simpan</button>
+            <button>Batal</button>
           </div>
         </div>
-        <div class="buttons">
-          <button>Simpan</button>
-          <button>Batal</button>
-        </div>
       </div>
-    </div>
-    <div id="modal-autoplay-container" class="modal-container">
-      <div id="modal-autoplay" class="modal">
-        <h3>Putar suara?</h3>
-        <ul>
-          <li>
-            <input type="checkbox" name="chk-jangan" id="chk-jangan" />
-            <label for="chk-jangan">Jangan tanya lagi</label>
-          </li>
-        </ul>
-        <div class="buttons">
-          <button id="btn-ya">Ya</button>
-          <button id="btn-tdk">Tidak</button>
-        </div>
-      </div>
-    </div>
-    <div id="modal-error-container" class="modal-container">
-      <div id="modal-error" class="modal"><span></span></div>
-    </div>
-    <div id="modal-credits-container" class="modal-container">
-      <div id="modal-credits" class="modal">
-      <h3>Credits</h3>
-      <ul>
-        <li><a href="https://freesound.org" target="_blank" rel="noopener noreferrer"">Freesound</a></li>
-        <li>Alert noise <a href="https://freesound.org/people/flowerdove2168/sounds/145096/" target="_blank" rel="noopener noreferrer">(alert.wav)</a> by <a href="https://freesound.org/people/flowerdove2168/" target="_blank" rel="noopener noreferrer">flowerdove2168</a></li>
-        <li>Warning sound <a href="https://freesound.org/people/KIZILSUNGUR/sounds/72129/" target="_blank" rel="noopener noreferrer">(SweetAlertSound5.wav)</a> by <a href="https://freesound.org/people/KIZILSUNGUR/" target="_blank" rel="noopener noreferrer">KIZILSUNGUR</a></li>
-        <li>Info <a href="https://freesound.org/people/InspectorJ/sounds/403009/" target="_blank" rel="noopener noreferrer">(UI Confirmation Alert, B3.wav)</a> and update sound <a href="https://freesound.org/people/InspectorJ/sounds/403011/" target="_blank" rel="noopener noreferrer">(UI Confirmation Alert, B1.wav)</a> by <a href="https://freesound.org/people/InspectorJ/" target="_blank" rel="noopener noreferrer">InspectorJ</a></li>
-      </ul>
-      <button>Tutup</button>
-      </div>
-    </div>
-    <!-- UI utama -->
-    <div class="container">
-      <div id="map"></div>
-      <div id="sidebar">
-        <div id="sidebar-title" title="Perluas/perkecil tampilan daftar">
-          <div>
-            <span><b>Daftar gempa realtime</b></span>
+      <div id="modal-autoplay-container" class="modal-container">
+        <div id="modal-autoplay" class="modal">
+          <h3>Putar suara?</h3>
+          <ul>
+            <li>
+              <input type="checkbox" name="chk-jangan" id="chk-jangan" />
+              <label for="chk-jangan">Jangan tanya lagi</label>
+            </li>
+          </ul>
+          <div class="buttons">
+            <button id="btn-ya">Ya</button>
+            <button id="btn-tdk">Tidak</button>
           </div>
-          <div>
-            <div class="toggle">
-              <div class="toggle-inner">
-                <img src="assets/toggle-collapse.svg" alt="toggle">
+        </div>
+      </div>
+      <div id="modal-error-container" class="modal-container">
+        <div id="modal-error" class="modal"><span></span></div>
+      </div>
+      <div id="modal-credits-container" class="modal-container">
+        <div id="modal-credits" class="modal">
+          <h3>Credits</h3>
+          <ul>
+            <li>
+              <a href="https://freesound.org" target="_blank" rel="noopener noreferrer">
+                Freesound
+              </a>
+            </li>
+            <li>
+              Alert noise
+              <a
+                href="https://freesound.org/people/flowerdove2168/sounds/145096/"
+                target="_blank"
+                rel="noopener noreferrer">
+                (alert.wav)
+              </a>
+              by
+              <a
+                href="https://freesound.org/people/flowerdove2168/"
+                target="_blank"
+                rel="noopener noreferrer">
+                flowerdove2168
+              </a>
+            </li>
+            <li>
+              Warning sound
+              <a
+                href="https://freesound.org/people/KIZILSUNGUR/sounds/72129/"
+                target="_blank"
+                rel="noopener noreferrer">
+                (SweetAlertSound5.wav)
+              </a>
+              by
+              <a
+                href="https://freesound.org/people/KIZILSUNGUR/"
+                target="_blank"
+                rel="noopener noreferrer">
+                KIZILSUNGUR
+              </a>
+            </li>
+            <li>
+              Info
+              <a
+                href="https://freesound.org/people/InspectorJ/sounds/403009/"
+                target="_blank"
+                rel="noopener noreferrer">
+                (UI Confirmation Alert, B3.wav)
+              </a>
+              and update sound
+              <a
+                href="https://freesound.org/people/InspectorJ/sounds/403011/"
+                target="_blank"
+                rel="noopener noreferrer">
+                (UI Confirmation Alert, B1.wav)
+              </a>
+              by
+              <a
+                href="https://freesound.org/people/InspectorJ/"
+                target="_blank"
+                rel="noopener noreferrer">
+                InspectorJ
+              </a>
+            </li>
+          </ul>
+          <button>Tutup</button>
+        </div>
+      </div>
+      <!-- UI utama -->
+      <div class="container">
+        <div id="map"></div>
+        <div id="sidebar">
+          <div id="sidebar-title" title="Perluas/perkecil tampilan daftar">
+            <div>
+              <span><b>Daftar gempa realtime</b></span>
+            </div>
+            <div>
+              <div class="toggle">
+                <div class="toggle-inner">
+                  <img src="assets/toggle-collapse.svg" alt="toggle" />
+                </div>
               </div>
             </div>
           </div>
+          <div id="daftar"></div>
         </div>
-        <div id="daftar"></div>
-      </div>
-      <div class="loading">
-        <div class="spinner-parent">
-          <img src="assets/spinner.svg" alt="loading" class="spinner">
+        <div class="loading">
+          <div class="spinner-parent">
+            <img src="assets/spinner.svg" alt="loading" class="spinner" />
+          </div>
         </div>
       </div>
-    </div>
-  </main>
-  <script src="assets/leaflet.js"></script>
-  <script src="script.js"></script>
-</body>
-
+    </main>
+    <script src="assets/leaflet.js"></script>
+    <script src="script.js"></script>
+  </body>
 </html>
