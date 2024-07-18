@@ -254,7 +254,7 @@ async function getDataRealtime() {
         }
 
         if (daftarGempa[eventid]) {
-          daftarGempa[eventid].updateParameter({
+          daftarGempa[eventid].setParameter({
             magnitudo: mag,
             kedalaman: kedalaman,
             lokasi: tempat,
