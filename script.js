@@ -48,14 +48,14 @@ async function initializeMap() {
 
 class EntriGempa {
   // Gunakan function tambahLingkaran/InfoHTML() untuk menempelkan event
-  constructor(eventId, magnitudo, kedalaman, lokasi, waktu, lat, lng) {
-    this._eventId = eventId;
-    this._mag = parseFloat(magnitudo);
-    this._kedalaman = parseFloat(kedalaman);
-    this._lokasi = lokasi;
-    this._waktu = waktu;
-    this._lat = lat;
-    this._lng = lng;
+  constructor({ eventId, magnitudo, kedalaman, lokasi, waktu, lat, lng }) {
+    this._eventId = eventId || "";
+    this._mag = parseFloat(magnitudo) || 0;
+    this._kedalaman = parseFloat(kedalaman) || 0;
+    this._lokasi = lokasi || "";
+    this._waktu = waktu || "";
+    this._lat = parseFloat(lat) || 0;
+    this._lng = parseFloat(lng) || 0;
     this._lingkaran = L.circleMarker();
     this._HTMLInfo = this._getKerangkaHTML();
     this.tambahLingkaran();
@@ -181,25 +181,14 @@ class EntriGempa {
     }
   }
 
-  updateParameter(magnitudo, kedalaman, lokasi, waktu, lat, lng) {
-    if (magnitudo) {
-      this._mag = parseFloat(magnitudo);
-    }
-    if (kedalaman) {
-      this._kedalaman = parseFloat(kedalaman);
-    }
-    if (lokasi) {
-      this._lokasi = lokasi;
-    }
-    if (waktu) {
-      this._waktu = waktu;
-    }
-    if (lat) {
-      this._lat = parseFloat(lat);
-    }
-    if (lng) {
-      this._lng = parseFloat(lng);
-    }
+  setParameter({ eventId, magnitudo, kedalaman, lokasi, waktu, lat, lng }) {
+    this._eventId = eventId || this._eventId || "";
+    this._mag = parseFloat(magnitudo) || this._mag || 0;
+    this._kedalaman = parseFloat(kedalaman) || this._kedalaman || 0;
+    this._lokasi = lokasi || this._lokasi || "";
+    this._waktu = waktu || this._waktu || "";
+    this._lat = parseFloat(lat) || this._lat || 0;
+    this._lng = parseFloat(lng) || this._lng || 0;
     this.updateLingkaran();
     this.updateInfoHTML();
   }
@@ -225,7 +214,15 @@ async function susunDaftarRealtime() {
     if (lng < -20) {
       lng = 180 + 180 + lng;
     }
-    const infoBaru = new EntriGempa(eventId, mag, kedalaman, tempat, waktu, lat, lng);
+    const infoBaru = new EntriGempa({
+      eventId: eventId,
+      magnitudo: mag,
+      kedalaman: kedalaman,
+      lokasi: tempat,
+      waktu: waktu,
+      lat: lat,
+      lng: lng,
+    });
     daftarGempa[eventId] = infoBaru;
   });
 }
@@ -257,10 +254,25 @@ async function getDataRealtime() {
         }
 
         if (daftarGempa[eventid]) {
-          daftarGempa[eventid].updateParameter(mag, kedalaman, tempat, waktu, lat, lng);
+          daftarGempa[eventid].updateParameter({
+            magnitudo: mag,
+            kedalaman: kedalaman,
+            lokasi: tempat,
+            waktu: waktu,
+            lat: lat,
+            lng: lng,
+          });
           playAudio("aud-update");
         } else {
-          const infoBaru = new EntriGempa(eventid, mag, kedalaman, tempat, waktu, lat, lng);
+          const infoBaru = new EntriGempa({
+            eventId: eventid,
+            magnitudo: mag,
+            kedalaman: kedalaman,
+            lokasi: tempat,
+            waktu: waktu,
+            lat: lat,
+            lng: lng,
+          });
           daftarGempa[eventid] = infoBaru;
           if (parseFloat(mag) >= 7) {
             if (document.hidden) {
