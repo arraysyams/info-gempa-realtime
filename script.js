@@ -285,6 +285,12 @@ async function getDataRealtime() {
             waktu: latestData.features[0].properties.time,
             entri: infoBaru,
           });
+          if (daftarGempa.length > 200) {
+            const lastEntry = daftarGempa[daftarGempa.length - 1];
+            lastEntry.entri.hapusLingkaran();
+            lastEntry.entri._HTMLInfo.remove();
+            daftarGempa.pop();
+          }
           if (parseFloat(mag) >= 7) {
             if (document.hidden) {
               playAudio("aud-alert");
