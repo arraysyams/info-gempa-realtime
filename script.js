@@ -233,7 +233,7 @@ async function susunDaftarRealtime() {
     const existingEvent = daftarGempa.find((event) => event.id == eventId);
 
     if (existingEvent) {
-      existingEvent.waktu = waktu;
+      existingEvent.waktu = event.properties.time;
       existingEvent.entri.setParameter({
         magnitudo: mag,
         kedalaman: kedalaman,
