@@ -58,8 +58,8 @@ class EntriGempa {
     this._lng = parseFloat(lng) || 0;
     this._lingkaran = L.circleMarker();
     this._HTMLInfo = this._getKerangkaHTML();
-    this.tambahLingkaran();
-    this.tambahInfoHTML();
+    // this.tambahLingkaran();
+    // this.tambahInfoHTML();
   }
   #visible = false;
   #defaultStyle = {};
@@ -196,38 +196,93 @@ class EntriGempa {
 
 var daftarGempa = [];
 
+function hapusKelebihanDaftar() {
+  const batasJumlah = 200;
+  if (daftarGempa.length > batasJumlah) {
+    const removedEvents = daftarGempa.splice(batasJumlah);
+    removedEvents.forEach((event) => {
+      event.entri.hapusLingkaran();
+      event.entri._HTMLInfo.remove();
+    });
+  }
+}
+
 async function susunDaftarRealtime() {
   const sumber = await getJSON("https://bmkg-content-inatews.storage.googleapis.com/gempaQL.json");
-  const data = [];
-  sumber.features.forEach((entri) => {
-    data.unshift(entri);
-  });
-  data.forEach((entri) => {
-    const eventId = entri.properties.id;
-    const mag = entri.properties.mag;
-    const waktu = entri.properties.time.split(".")[0] + " UTC";
-    const kedalaman = entri.properties.depth;
-    const tempat = entri.properties.place;
 
-    const lat = parseFloat(entri.geometry.coordinates[1]);
-    let lng = parseFloat(entri.geometry.coordinates[0]);
+  if (daftarGempa.length > 0) {
+    daftarGempa.forEach((event) => {
+      event.entri._HTMLInfo.remove();
+      event.entri.hapusLingkaran();
+    });
+  }
+
+  sumber.features.forEach((event) => {
+    const eventId = event.properties.id;
+    const mag = event.properties.mag;
+    const waktu = event.properties.time.split(".")[0] + " UTC";
+    const kedalaman = event.properties.depth;
+    const tempat = event.properties.place;
+
+    const lat = parseFloat(event.geometry.coordinates[1]);
+    let lng = parseFloat(event.geometry.coordinates[0]);
     if (lng < -20) {
       lng = 180 + 180 + lng;
     }
-    const infoBaru = new EntriGempa({
-      eventId: eventId,
-      magnitudo: mag,
-      kedalaman: kedalaman,
-      lokasi: tempat,
-      waktu: waktu,
-      lat: lat,
-      lng: lng,
-    });
-    daftarGempa.unshift({
-      id: eventId,
-      waktu: entri.properties.time,
-      entri: infoBaru,
-    });
+
+    const existingEvent = daftarGempa.find((event) => event.id == eventId);
+
+    if (existingEvent) {
+      existingEvent.waktu = waktu;
+      existingEvent.entri.setParameter({
+        magnitudo: mag,
+        kedalaman: kedalaman,
+        lokasi: tempat,
+        waktu: waktu,
+        lat: lat,
+        lng: lng,
+      });
+    } else {
+      const infoBaru = new EntriGempa({
+        eventId: eventId,
+        magnitudo: mag,
+        kedalaman: kedalaman,
+        lokasi: tempat,
+        waktu: waktu,
+        lat: lat,
+        lng: lng,
+      });
+      daftarGempa.push({
+        id: eventId,
+        waktu: event.properties.time,
+        entri: infoBaru,
+      });
+    }
+  });
+
+  // Dokumentasi Array.sort()
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+  daftarGempa.sort((a, b) => {
+    if (a.waktu < b.waktu) {
+      return 1;
+    } else if (a.waktu > b.waktu) {
+      return -1;
+    } else {
+      if (a.id < b.id) {
+        return 1;
+      } else if (a.id > b.id) {
+        return -1;
+      } else {
+        return 0;
+      }
+    }
+  });
+
+  hapusKelebihanDaftar();
+  // Urutan array sudah sesuai, namun harus dibalik agar tampilan di html sama
+  [...daftarGempa].reverse().forEach((event) => {
+    event.entri.tambahInfoHTML();
+    event.entri.tambahLingkaran();
   });
 }
 
@@ -257,11 +312,11 @@ async function getDataRealtime() {
           lng = 180 + 180 + lng;
         }
 
-        const existingEntry = daftarGempa.find((event) => event.id == eventid);
+        const existingEvent = daftarGempa.find((event) => event.id == eventid);
 
-        if (existingEntry) {
-          existingEntry.waktu = waktu;
-          existingEntry.entri.setParameter({
+        if (existingEvent) {
+          existingEvent.waktu = waktu;
+          existingEvent.entri.setParameter({
             magnitudo: mag,
             kedalaman: kedalaman,
             lokasi: tempat,
@@ -269,6 +324,8 @@ async function getDataRealtime() {
             lat: lat,
             lng: lng,
           });
+          existingEvent.entri.updateInfoHTML();
+          existingEvent.entri.updateLingkaran();
           playAudio("aud-update");
         } else {
           const infoBaru = new EntriGempa({
@@ -285,12 +342,9 @@ async function getDataRealtime() {
             waktu: latestData.features[0].properties.time,
             entri: infoBaru,
           });
-          if (daftarGempa.length > 200) {
-            const lastEntry = daftarGempa[daftarGempa.length - 1];
-            lastEntry.entri.hapusLingkaran();
-            lastEntry.entri._HTMLInfo.remove();
-            daftarGempa.pop();
-          }
+          infoBaru.tambahInfoHTML();
+          infoBaru.tambahLingkaran();
+          hapusKelebihanDaftar();
           if (parseFloat(mag) >= 7) {
             if (document.hidden) {
               playAudio("aud-alert");
