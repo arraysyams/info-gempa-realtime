@@ -26,7 +26,9 @@ async function initializeMap() {
   });
   osm.addTo(map);
   map.attributionControl.addAttribution(`Sumber data: BMKG`);
+}
 
+function loadFaultsLines() {
   // const faultStyleRoad = {
   //   "color": "#6554AF",
   //   "weight": 1.2,
@@ -37,14 +39,18 @@ async function initializeMap() {
   //   "weight": 1.2,
   //   "opacity": 1
   // };
-  const faultRequest = await getJSON(
-    "https://bmkg-content-inatews.storage.googleapis.com/indo_faults_lines.geojson"
-  );
-  const faults = L.geoJSON(faultRequest);
-  faults.addTo(map);
-  faults.eachLayer((layer) => {
-    L.DomUtil.addClass(layer.getElement(), "faults-area");
-  });
+
+  getJSON("https://bmkg-content-inatews.storage.googleapis.com/indo_faults_lines.geojson")
+    .then((faults_geojson) => {
+      const faults = L.geoJSON(faults_geojson);
+      faults.addTo(map);
+      faults.eachLayer((layer) => {
+        L.DomUtil.addClass(layer.getElement(), "faults-area");
+      });
+    })
+    .catch((e) => {
+      console.error("Gagal memuat data sesar gempa:", e);
+    });
 }
 
 class EntriGempa {
@@ -551,6 +557,7 @@ async function mulai() {
   try {
     setSidebarDisplay();
     await initializeMap();
+    loadFaultsLines();
     setCreditsButton();
     await susunDaftarRealtime();
     askAutoplay();
