@@ -44,6 +44,7 @@ function loadFaultsLines() {
     .then((faults_geojson) => {
       const faults = L.geoJSON(faults_geojson);
       faults.addTo(map);
+      faults.bringToBack();
       faults.eachLayer((layer) => {
         L.DomUtil.addClass(layer.getElement(), "faults-area");
       });
