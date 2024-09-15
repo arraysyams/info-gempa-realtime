@@ -15,7 +15,18 @@ async function initializeMap() {
     zoomLevel = 3;
   }
   map.setView([-3, 118], zoomLevel);
+  map.zoomControl.setPosition("bottomleft");
   map.attributionControl.setPosition("topleft");
+  map.attributionControl.setPrefix(`<a href="https://leafletjs.com/" target="_blank">Leaflet</a>`);
+  const osm = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    minZoom: 3,
+    maxZoom: 13,
+    attribution:
+      '&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
+  });
+  osm.addTo(map);
+  map.attributionControl.addAttribution(`Sumber data: BMKG`);
+
   // const faultStyleRoad = {
   //   "color": "#6554AF",
   //   "weight": 1.2,
@@ -34,18 +45,6 @@ async function initializeMap() {
   faults.eachLayer((layer) => {
     L.DomUtil.addClass(layer.getElement(), "faults-area");
   });
-
-  map.attributionControl.setPrefix(`<a href="https://leafletjs.com/" target="_blank">Leaflet</a>`);
-  const osm = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    minZoom: 3,
-    maxZoom: 13,
-    attribution:
-      '&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
-  });
-  osm.addTo(map);
-
-  map.attributionControl.addAttribution(`Sumber data: BMKG`);
-  map.zoomControl.setPosition("bottomleft");
 }
 
 class EntriGempa {
