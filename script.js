@@ -35,10 +35,12 @@ async function initializeMap() {
     L.DomUtil.addClass(layer.getElement(), "faults-area");
   });
 
+  map.attributionControl.setPrefix(`<a href="https://leafletjs.com/" target="_blank">Leaflet</a>`);
   const osm = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     minZoom: 3,
     maxZoom: 13,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    attribution:
+      '&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
   });
   osm.addTo(map);
 
