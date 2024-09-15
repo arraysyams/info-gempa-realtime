@@ -158,7 +158,7 @@ class EntriGempa {
         <div class="mag"><b>M${getDisplayedMagnitude(this._mag)}</b></div>
         <div>${this._lokasi}</div>
         <div>Kedalaman: ${Math.round(this._kedalaman)} km</div>
-	      <div>${this._waktu}</div>
+	      <div>${getLocalTime(this._waktu)}</div>
       </div>
       `)
     );
@@ -178,7 +178,7 @@ class EntriGempa {
     this._HTMLInfo.querySelector(".mag").textContent = getDisplayedMagnitude(this._mag);
     this._HTMLInfo.querySelector(".lokasi").textContent = this._lokasi;
     this._HTMLInfo.querySelector(".kedalaman").textContent = `${Math.round(this._kedalaman)} km`;
-    this._HTMLInfo.querySelector(".waktu").textContent = this._waktu;
+    this._HTMLInfo.querySelector(".waktu").textContent = getLocalTime(this._waktu);
     if (this._mag >= 7) {
       this._HTMLInfo.classList.add("bahaya");
     } else if (this._mag >= 5) {
@@ -228,7 +228,7 @@ async function susunDaftarRealtime() {
   sumber.features.forEach((event) => {
     const eventId = event.properties.id;
     const mag = event.properties.mag;
-    const waktu = event.properties.time.split(".")[0] + " UTC";
+    const waktu = event.properties.time;
     const kedalaman = event.properties.depth;
     const tempat = event.properties.place;
 
@@ -311,7 +311,7 @@ async function getDataRealtime() {
         currentData = JSON.stringify(latestData);
         const eventid = latestData.features[0].properties.id;
         const mag = latestData.features[0].properties.mag;
-        const waktu = latestData.features[0].properties.time.split(".")[0] + " UTC";
+        const waktu = latestData.features[0].properties.time;
         const kedalaman = latestData.features[0].properties.depth;
         const tempat = latestData.features[0].properties.place;
         const lat = parseFloat(latestData.features[0].geometry.coordinates[1]);
