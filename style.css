@@ -132,7 +132,7 @@
 }
 
 html {
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-family: 'Fira Sans', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 html,
@@ -567,6 +567,11 @@ div.modal {
 }
 
 /* Komponen leaflet */
+/* Setup font */
+.leaflet-container {
+  font-family: "Fira Sans", "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+
 /* Zoom control */
 .leaflet-bar .leaflet-control-zoom-in,
 .leaflet-bar .leaflet-control-zoom-out {
