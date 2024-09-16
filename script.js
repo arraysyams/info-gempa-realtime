@@ -215,6 +215,7 @@ function hapusKelebihanDaftar() {
   }
 }
 
+var daftarInterval;
 async function susunDaftarRealtime() {
   const sumber = await getJSON("https://bmkg-content-inatews.storage.googleapis.com/gempaQL.json");
 
@@ -293,6 +294,18 @@ async function susunDaftarRealtime() {
     event.entri.tambahLingkaran();
   });
 }
+
+var realtimeInterval = {
+  _interval: null,
+  start: () => {
+    this._interval = setInterval(() => {
+      getDataRealtime();
+    }, 5000);
+  },
+  stop: () => {
+    clearInterval(this._interval);
+  },
+};
 
 var currentData;
 async function getDataRealtime() {
@@ -376,9 +389,6 @@ async function getDataRealtime() {
       showTopError(`Terjadi kesalahan. (${error})`);
     }
   }
-  window.setTimeout(() => {
-    getDataRealtime();
-  }, 5000);
 }
 
 // Variabel untuk menandai izin autoplay suara
@@ -575,7 +585,17 @@ async function mulai() {
     }
   } else {
     document.querySelector(".loading").style.display = "none";
-    getDataRealtime();
+    realtimeInterval.start();
+    daftarInterval = setInterval(() => {
+      realtimeInterval.stop();
+      susunDaftarRealtime()
+        .catch((e) => {
+          showInnerMessage(`Terjadi kesalahan saat memuat daftar gempa:\n${e}`, 10000);
+        })
+        .finally(() => {
+          realtimeInterval.start();
+        });
+    }, 1800000);
   }
 }
 
