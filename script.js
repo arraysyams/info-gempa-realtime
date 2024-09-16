@@ -26,6 +26,8 @@ async function initializeMap() {
   });
   osm.addTo(map);
   map.attributionControl.addAttribution(`Sumber data: BMKG`);
+  setCreditsButton();
+  setSidebarDisplay();
 }
 
 function loadFaultsLines() {
@@ -566,14 +568,11 @@ function setSidebarDisplay() {
   });
 }
 
-async function mulai() {
+async function ambilData() {
   let err;
 
   try {
-    setSidebarDisplay();
-    await initializeMap();
     loadFaultsLines();
-    setCreditsButton();
     await susunDaftarRealtime();
     askAutoplay();
   } catch (e) {
@@ -582,7 +581,7 @@ async function mulai() {
   if (err) {
     const retry = confirm(`Terjadi kesalahan saat pengambilan data. Coba lagi?\n(${err})`);
     if (retry) {
-      window.setTimeout(() => mulai(), 500);
+      window.setTimeout(() => ambilData(), 500);
     } else {
       document.querySelector(".spinner").style.display = "none";
       showTopError(`Terjadi kesalahan, mohon refresh halaman ini. (${err})`);
@@ -603,4 +602,6 @@ async function mulai() {
   }
 }
 
-mulai();
+initializeMap()
+  .then(() => ambilData())
+  .catch((e) => showTopError(`Terjadi kesalahan saat memuat peta. (${e})`));
