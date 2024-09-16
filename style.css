@@ -131,7 +131,8 @@
   }
 }
 
-html {
+html,
+button {
   font-family: 'Fira Sans', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
@@ -265,7 +266,7 @@ body {
   position: sticky;
   top: 35px;
   border-bottom: 3px dashed var(--entri-default-color);
-  padding: 3px 0;
+  padding: 4px 0;
 }
 
 .entri {
@@ -276,7 +277,7 @@ body {
   border-bottom: 1px dashed var(--entri-default-color);
   color: var(--default-color);
   cursor: pointer;
-  padding: 2px 0;
+  padding: 4px 0;
 }
 
 .entri:hover {
@@ -319,6 +320,10 @@ body {
   text-overflow: ellipsis;
 }
 
+.entri>.info>.lokasi {
+  font-weight: 500;
+}
+
 /* Tampilan sidebar pada tampilan portrait gawai */
 @media screen and (max-width: 768px) and (orientation: portrait) {
   .container {
@@ -344,6 +349,36 @@ body {
 /* Info Popup */
 .popup-titik {
   text-align: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.popup-titik>.mag {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 2px;
+  padding: 6px;
+  border-radius: 9999px;
+  background-color: var(--default-color);
+  color: var(--default-background);
+}
+
+.popup-titik>.info {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.popup-titik>.info>.lokasi {
+  font-weight: 500;
 }
 
 /* Loading spinner */
@@ -477,6 +512,7 @@ div.modal {
 
 .modal button {
   cursor: pointer;
+  font-weight: 500;
   background-color: var(--modal-button-background);
   padding: 7px;
   border-radius: 5px;

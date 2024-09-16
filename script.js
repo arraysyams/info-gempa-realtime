@@ -155,10 +155,14 @@ class EntriGempa {
     this._lingkaran.bindPopup(
       L.popup().setContent(`
       <div class="popup-titik">
-        <div class="mag"><b>M${getDisplayedMagnitude(this._mag)}</b></div>
-        <div>${this._lokasi}</div>
-        <div>Kedalaman: ${Math.round(this._kedalaman)} km</div>
-	      <div>${getLocalTime(this._waktu)}</div>
+        <div class="mag">
+          <span>${getDisplayedMagnitude(this._mag)}</span>
+        </div>
+        <div class="info">
+          <div class="lokasi">${this._lokasi}</div>
+          <div class="kedalaman">Kedalaman: ${Math.round(this._kedalaman)} km</div>
+          <div class="waktu">${getLocalTime(this._waktu)}</div>
+        </div>
       </div>
       `)
     );
