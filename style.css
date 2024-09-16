@@ -180,6 +180,7 @@ body {
   stroke: var(--faults-stroke);
   fill-opacity: 1;
   stroke-width: 1.2;
+  cursor: inherit;
 }
 
 /* Sidebar daftar gempa */
