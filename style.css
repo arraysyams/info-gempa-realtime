@@ -11,7 +11,7 @@
   --lingkaran-stroke: red;
   --lingkaran-fill-clicked: white;
   --lingkaran-stroke-clicked: black;
-  --faults-stroke: #6554AF;
+  --faults-stroke: #6554af;
 
   /* Sidebar */
   --sidebar-shadow-color: #00000084;
@@ -126,14 +126,14 @@
   }
 
   /* Tilelayer */
-  .leaflet-tile-container>* {
+  .leaflet-tile-container > * {
     filter: invert(1) hue-rotate(230deg) grayscale(0.8) brightness(1.5);
   }
 }
 
 html,
 button {
-  font-family: 'Fira Sans', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-family: "Fira Sans", "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
 html,
@@ -297,7 +297,7 @@ body {
   border-color: var(--entri-bahaya-color);
 }
 
-.entri>.mag {
+.entri > .mag {
   font-weight: 700;
   width: 50px;
   font-size: 24px;
@@ -307,21 +307,21 @@ body {
   flex-shrink: 0;
 }
 
-.entri>.info {
+.entri > .info {
   white-space: nowrap;
   overflow: hidden;
   font-size: 12px;
   text-overflow: ellipsis;
 }
 
-.entri>.info>* {
+.entri > .info > * {
   white-space: nowrap;
   overflow: hidden;
   font-size: 12px;
   text-overflow: ellipsis;
 }
 
-.entri>.info>.lokasi {
+.entri > .info > .lokasi {
   font-weight: 500;
 }
 
@@ -356,7 +356,7 @@ body {
   gap: 10px;
 }
 
-.popup-titik>.mag {
+.popup-titik > .mag {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -372,13 +372,13 @@ body {
   color: var(--default-background);
 }
 
-.popup-titik>.info {
+.popup-titik > .info {
   display: flex;
   flex-direction: column;
   align-items: start;
 }
 
-.popup-titik>.info>.lokasi {
+.popup-titik > .info > .lokasi {
   font-weight: 500;
 }
 
@@ -414,35 +414,35 @@ body {
 
 @keyframes spinning {
   0% {
-    rotate: 0deg
+    rotate: 0deg;
   }
 
   12.5% {
-    rotate: 45deg
+    rotate: 45deg;
   }
 
   25% {
-    rotate: 90deg
+    rotate: 90deg;
   }
 
   37.5% {
-    rotate: 135deg
+    rotate: 135deg;
   }
 
   50% {
-    rotate: 180deg
+    rotate: 180deg;
   }
 
   62.5% {
-    rotate: 225deg
+    rotate: 225deg;
   }
 
   75% {
-    rotate: 270deg
+    rotate: 270deg;
   }
 
   87.5% {
-    rotate: 315deg
+    rotate: 315deg;
   }
 }
 
@@ -467,7 +467,6 @@ body {
   color: var(--btn-credits-color-hover);
 }
 
-
 /* Modal */
 div.modal-container {
   position: absolute;
@@ -481,6 +480,76 @@ div.modal-container {
   left: 0;
   background-color: var(--modal-container-background);
   z-index: 999;
+}
+
+div.modal-container.show {
+  display: flex;
+  animation-name: showing;
+  animation-duration: 0.2s;
+}
+
+@keyframes showing {
+  0% {
+    display: flex;
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+div.modal-container.show .modal {
+  display: flex;
+  animation-name: showingModal;
+  animation-duration: 0.25s;
+  animation-timing-function: ease-out;
+}
+
+@keyframes showingModal {
+  0% {
+    opacity: 0;
+    transform: scale3d(0.8, 0.8, 1);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+div.modal-container.hide {
+  animation-name: hiding;
+  animation-duration: 0.2s;
+}
+
+div.modal-container.hide .modal {
+  animation-name: hidingModal;
+  animation-duration: 0.2s;
+}
+
+@keyframes hiding {
+  0% {
+    display: flex;
+    opacity: 1;
+  }
+
+  100% {
+    display: flex;
+    opacity: 0;
+  }
+}
+
+@keyframes hidingModal {
+  0% {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale3d(0.7, 0.7, 1);
+  }
 }
 
 div.modal {
@@ -532,7 +601,7 @@ div.modal {
   gap: 10px;
 }
 
-.modal .buttons>* {
+.modal .buttons > * {
   flex-grow: 1;
 }
 
@@ -572,7 +641,7 @@ div.modal {
   column-gap: 5px;
 }
 
-#modal-setelan .buttons>* {
+#modal-setelan .buttons > * {
   flex-grow: 1;
 }
 
