@@ -447,11 +447,9 @@ async function askAutoplay() {
   // atau jika user ingin selalu mengaktifkan suara, namun tidak memberikan izin autoplay
   if (bukaModal) {
     const chkJangan = document.querySelector("#modal-autoplay #chk-jangan");
-    document.querySelector("#modal-autoplay-container").classList.remove("hide");
     document.querySelector("#modal-autoplay-container").classList.add("show");
     const tutupModal = () => {
       document.querySelector("#modal-autoplay-container").classList.remove("show");
-      document.querySelector("#modal-autoplay-container").classList.add("hide");
     };
     const btnYa = document.querySelector("#modal-autoplay #btn-ya");
     btnYa.addEventListener("click", () => {
@@ -514,11 +512,9 @@ function showTopError(message) {
   const modalErr = document.querySelector("#modal-error-container");
   if (message) {
     modalErr.querySelector("span").textContent = message;
-    modalErr.classList.remove("hide");
     modalErr.classList.add("show");
   } else {
     modalErr.classList.remove("show");
-    modalErr.classList.add("hide");
   }
 }
 
@@ -543,7 +539,6 @@ function setCreditsButton() {
     const div = L.DomUtil.create("div", "credits");
     const btn = L.DomUtil.create("button", "btn-credits");
     btn.addEventListener("click", () => {
-      document.querySelector("#modal-credits-container").classList.remove("hide");
       document.querySelector("#modal-credits-container").classList.add("show");
     });
     L.DomEvent.addListener(btn, "dblclick", L.DomEvent.stop);
@@ -556,7 +551,6 @@ function setCreditsButton() {
   divCredits.addTo(map);
   document.querySelector("#modal-credits > button").addEventListener("click", () => {
     document.querySelector("#modal-credits-container").classList.remove("show");
-    document.querySelector("#modal-credits-container").classList.add("hide");
   });
 }
 

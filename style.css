@@ -470,7 +470,9 @@ body {
 /* Modal */
 div.modal-container {
   position: absolute;
-  display: none;
+  opacity: 0;
+  pointer-events: none;
+  display: flex;
   text-align: center;
   align-items: center;
   justify-content: center;
@@ -480,76 +482,18 @@ div.modal-container {
   left: 0;
   background-color: var(--modal-container-background);
   z-index: 999;
+  transition: opacity 0.2s;
 }
 
 div.modal-container.show {
-  display: flex;
-  animation-name: showing;
-  animation-duration: 0.2s;
-}
-
-@keyframes showing {
-  0% {
-    display: flex;
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
+  opacity: 1;
+  pointer-events: all !important;
 }
 
 div.modal-container.show .modal {
-  display: flex;
-  animation-name: showingModal;
-  animation-duration: 0.25s;
-  animation-timing-function: ease-out;
-}
-
-@keyframes showingModal {
-  0% {
-    opacity: 0;
-    transform: scale3d(0.8, 0.8, 1);
-  }
-
-  100% {
-    opacity: 1;
-    transform: scale3d(1, 1, 1);
-  }
-}
-
-div.modal-container.hide {
-  animation-name: hiding;
-  animation-duration: 0.2s;
-}
-
-div.modal-container.hide .modal {
-  animation-name: hidingModal;
-  animation-duration: 0.2s;
-}
-
-@keyframes hiding {
-  0% {
-    display: flex;
-    opacity: 1;
-  }
-
-  100% {
-    display: flex;
-    opacity: 0;
-  }
-}
-
-@keyframes hidingModal {
-  0% {
-    opacity: 1;
-    transform: scale3d(1, 1, 1);
-  }
-
-  100% {
-    opacity: 0;
-    transform: scale3d(0.7, 0.7, 1);
-  }
+  opacity: 1;
+  transform: scale3d(1, 1, 1) !important;
+  pointer-events: all !important;
 }
 
 div.modal {
@@ -569,6 +513,8 @@ div.modal {
   overflow: auto;
   max-height: 80vh;
   max-width: 80vw;
+  transform: scale3d(0.8, 0.8, 1);
+  transition: transform 0.2s ease-out, opacity 0.2s ease-out;
 }
 
 .modal h3 {
